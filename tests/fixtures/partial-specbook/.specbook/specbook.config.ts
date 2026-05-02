@@ -1,5 +1,3 @@
-import { defineConfig } from 'specbook'
-
-export default defineConfig({
+export default {
   project: { name: 'partial' },
-})
+}
