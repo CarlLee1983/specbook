@@ -1,0 +1,10 @@
+src/
+tests/
+examples/
+docs/
+.specbook/
+.superpowers/
+*.config.ts
+tsconfig.json
+vitest.config.ts
+.github/

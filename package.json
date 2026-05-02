@@ -4,6 +4,15 @@
   "description": "Static site generator for software project specifications.",
   "type": "module",
   "license": "MIT",
+  "keywords": ["static-site-generator", "specification", "spec", "documentation", "react", "vite", "tailwind"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<owner>/specbook"
+  },
+  "homepage": "https://github.com/<owner>/specbook#readme",
+  "bugs": {
+    "url": "https://github.com/<owner>/specbook/issues"
+  },
   "bin": {
     "specbook": "./dist/cli/index.js"
   },
