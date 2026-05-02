@@ -1,0 +1,8 @@
+- as: 忙碌的開發者
+  want: 按下 ⌘+N 立刻新增一筆待辦
+  soThat: 打斷思緒的時間 < 1 秒
+  priority: p0
+- as: 通勤中的使用者
+  want: 在沒網路時也能新增、編輯、勾選
+  soThat: 回到網路時自動同步
+  priority: p0
