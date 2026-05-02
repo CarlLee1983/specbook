@@ -15,7 +15,11 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "dev": "vite --config vite.config.ts examples/taskflow",
     "build": "tsc -p tsconfig.json",
@@ -24,5 +28,31 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "^14.0.3",
+    "gray-matter": "^4.0.3",
+    "jiti": "^2.6.1",
+    "mermaid-isomorphic": "^3.1.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "yaml": "^2.8.4",
+    "zod": "^4.4.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/ui": "^4.1.5",
+    "happy-dom": "^20.9.0",
+    "jsdom": "^29.1.1",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.2",
+    "vitest": "^4.1.5"
   }
 }

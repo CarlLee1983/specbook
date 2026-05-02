@@ -1,0 +1,14 @@
+@import "./tokens.css";
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.serif { font-family: var(--font-serif); font-weight: 500; }
+.mono { font-family: var(--font-mono); }
