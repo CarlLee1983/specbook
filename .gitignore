@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.specbook/dist/
+.superpowers/
+*.log
+.DS_Store
+.vite/
+coverage/

@@ -1,0 +1,28 @@
+{
+  "name": "specbook",
+  "version": "0.1.0",
+  "description": "Static site generator for software project specifications.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "specbook": "./dist/cli/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "dev": "vite --config vite.config.ts examples/taskflow",
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
