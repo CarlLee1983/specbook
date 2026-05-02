@@ -36,6 +36,16 @@ program
     await runBuild({ root: resolve(process.cwd(), opts.root), base: opts.base })
   })
 
+program
+  .command('dev')
+  .description('Start dev server with HMR')
+  .option('-r, --root <dir>', 'Path to .specbook directory', '.specbook')
+  .option('-p, --port <port>', 'Port number', (v) => Number(v), 5173)
+  .action(async (opts: { root: string; port: number }) => {
+    const { runDev } = await import('./dev.js')
+    await runDev({ root: resolve(process.cwd(), opts.root), port: opts.port })
+  })
+
 program.parseAsync(process.argv).catch((e) => {
   console.error(e)
   process.exit(1)
