@@ -2,7 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import '../../src/styles/global.css'
 import { SpecBookPage } from '../../src/components/SpecBookPage.js'
-import { examplesData } from '../../src/dev/dev-data-stub.js'
+import data from 'virtual:specbook-data'
 
 const root = createRoot(document.getElementById('root')!)
-root.render(<SpecBookPage data={examplesData} />)
+root.render(<SpecBookPage data={data as any} />)
