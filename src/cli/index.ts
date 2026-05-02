@@ -11,6 +11,22 @@ program
   .version('0.1.0')
 
 program
+  .command('init')
+  .description('Scaffold .specbook/ in current project')
+  .option('-r, --root <dir>', 'Project root', process.cwd())
+  .option('--force', 'Overwrite existing files', false)
+  .option('--only <list>', 'Comma-separated kinds (overview,tech-stack,...)')
+  .action(async (opts: { root: string; force: boolean; only?: string }) => {
+    const { runInitCli } = await import('./init.js')
+    const only = opts.only
+      ? (opts.only.split(',').map((s) => s.trim()) as never[])
+      : undefined
+    const r = await runInitCli({ root: opts.root, force: opts.force, only })
+    process.stdout.write(r.summary + '\n')
+    process.exit(r.exitCode)
+  })
+
+program
   .command('validate')
   .description('Validate .specbook/content/* against schemas')
   .option('-r, --root <dir>', 'Path to .specbook directory', '.specbook')
