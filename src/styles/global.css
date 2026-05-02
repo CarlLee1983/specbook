@@ -95,3 +95,14 @@ section .lead { color: var(--color-text-soft); font-size: 16px; max-width: 560px
 .toc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-text-mute); margin-bottom: 12px; font-weight: 600; }
 
 .footer { padding: 48px 0; color: var(--color-text-mute); font-size: 13px; text-align: center; border-top: 1px solid var(--color-border); margin-top: 48px; font-family: var(--font-mono); }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; padding: 0 24px; gap: 0; }
+  .toc { display: none; }
+  .stack-grid { grid-template-columns: 1fr; }
+  .story-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 48px; }
+  section h2 { font-size: 32px; }
+  section { padding: 56px 0; }
+  .main { padding: 56px 0; }
+}
