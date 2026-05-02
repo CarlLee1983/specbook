@@ -7,11 +7,11 @@
   "keywords": ["static-site-generator", "specification", "spec", "documentation", "react", "vite", "tailwind"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/<owner>/specbook"
+    "url": "https://github.com/carl-ee/specbook"
   },
-  "homepage": "https://github.com/<owner>/specbook#readme",
+  "homepage": "https://github.com/carl-ee/specbook#readme",
   "bugs": {
-    "url": "https://github.com/<owner>/specbook/issues"
+    "url": "https://github.com/carl-ee/specbook/issues"
   },
   "bin": {
     "specbook": "./dist/cli/index.js"
@@ -26,6 +26,7 @@
   },
   "files": [
     "dist",
+    "skill",
     "README.md",
     "LICENSE"
   ],
@@ -33,7 +34,9 @@
     "dev": "vite --config vite.config.ts examples/taskflow",
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "pnpm test && pnpm build",
+    "pack:check": "npm pack --dry-run"
   },
   "engines": {
     "node": ">=20"
