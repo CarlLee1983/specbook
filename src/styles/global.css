@@ -49,3 +49,15 @@ html, body {
 .prose p + p { margin-top: 16px; }
 .prose strong { color: var(--color-text); }
 .prose code { background: var(--color-code-bg); padding: 1px 6px; border-radius: 3px; font-size: 13px; font-family: var(--font-mono); }
+
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.story-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 24px; position: relative; }
+.story-card .priority { position: absolute; top: 16px; right: 16px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+.priority.p0 { background: #fee2e2; color: #b91c1c; }
+.priority.p1 { background: #fef3c7; color: #b45309; }
+.priority.p2 { background: var(--color-code-bg); color: var(--color-text-mute); }
+.story-card .as { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-mute); margin-bottom: 4px; }
+.story-card .role-name { font-weight: 600; font-size: 16px; margin-bottom: 16px; }
+.story-card .want { font-size: 15px; color: var(--color-text); line-height: 1.6; }
+.story-card .so-that-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-mute); display: block; margin-bottom: 4px; }
+.story-card .so-that { font-size: 14px; color: var(--color-text-soft); border-top: 1px dashed var(--color-border); padding-top: 12px; margin-top: 16px; line-height: 1.55; }
