@@ -1,0 +1,16 @@
+- as: 忙碌的開發者
+  want: 按下 ⌘+N 立刻新增一筆待辦
+  soThat: 打斷思緒的時間 < 1 秒
+  priority: p0
+- as: 通勤中的使用者
+  want: 在沒網路時也能新增、編輯、勾選待辦
+  soThat: 回到網路時自動同步、不丟資料
+  priority: p0
+- as: 多裝置使用者
+  want: 在 Mac 與手機間即時看到變動
+  soThat: 不需要手動 refresh 或重新登入
+  priority: p1
+- as: 視覺整理控
+  want: 用 tag 分組待辦並收合次要群組
+  soThat: 眼前永遠只剩重要的事
+  priority: p2

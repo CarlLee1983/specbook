@@ -1,0 +1,25 @@
+- title: M1 — Local MVP
+  quarter: 2026 Q1
+  status: done
+  items:
+    - 本機新增 / 編輯 / 完成
+    - IndexedDB 持久化
+    - 鍵盤優先操作
+- title: M2 — 雲端同步
+  quarter: 2026 Q2
+  status: active
+  items:
+    - Supabase 帳號 + 多裝置同步
+    - 離線佇列與衝突解決
+    - Realtime push 更新
+- title: M3 — 共享清單
+  quarter: 2026 Q3
+  status: future
+  items:
+    - 列表分享連結 + 權限
+- title: M4 — Public API
+  quarter: 2026 Q4
+  status: future
+  items:
+    - 第三方整合（Raycast、Alfred）
+    - OAuth + rate limit

@@ -1,0 +1,13 @@
+- layer: Frontend
+  items:
+    - name: React
+      version: "19.0"
+      role: UI 元件框架
+    - name: Tailwind CSS
+      version: "4.0"
+      role: 原子化樣式
+- layer: Backend
+  items:
+    - name: Supabase
+      version: "2.x"
+      role: Postgres + Realtime
