@@ -62,6 +62,19 @@ program
     await runDev({ root: resolve(process.cwd(), opts.root), port: opts.port })
   })
 
+program
+  .command('gaps')
+  .description('Detect placeholder / unfinished sections in .specbook/content')
+  .option('-r, --root <dir>', 'Path to .specbook directory', '.specbook')
+  .option('--json', 'Emit JSON to stdout', false)
+  .action(async (opts: { root: string; json: boolean }) => {
+    const { runGapsCli } = await import('./gaps.js')
+    const r = await runGapsCli({ root: opts.root, json: opts.json })
+    if (r.stdout) process.stdout.write(r.stdout + '\n')
+    if (r.stderr) process.stderr.write(r.stderr + '\n')
+    process.exit(r.exitCode)
+  })
+
 program.parseAsync(process.argv).catch((e) => {
   console.error(e)
   process.exit(1)
