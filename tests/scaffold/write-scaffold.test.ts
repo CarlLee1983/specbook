@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { mkdtempSync, writeFileSync, readFileSync, existsSync, rmSync, mkdirSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, dirname } from 'node:path'
 import { tmpdir } from 'node:os'
 import { writeScaffold, ScaffoldFile } from '../../src/scaffold/write-scaffold.js'
 
@@ -33,9 +33,9 @@ describe('writeScaffold', () => {
 
   it('檔案存在但為空 → 視為缺檔，會寫入', () => {
     const path = join(dir, 'content/overview.md')
-    mkdirSync(join(dir, 'content'), { recursive: true })
+    mkdirSync(dirname(path), { recursive: true })
     writeFileSync(path, '')
-    writeScaffold(dir, files)
+    writeScaffold(dir, files) // dir 自動建中介資料夾
     expect(readFileSync(path, 'utf-8')).toBe('OV')
   })
 

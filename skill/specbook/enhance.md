@@ -1,73 +1,56 @@
 # /specbook enhance — Procedure
 
-Goal: turn placeholder sections into real content via short Q&A with the user, write back, validate.
+Goal: fill in `user-stories.yaml` and `roadmap.yaml` through interactive Q&A, ensuring the final spec is professional and specific.
+
+## Inputs you have at the start
+
+- The user's current working directory (the project root).
+- Tools: `Read`, `Write`, `Bash`.
 
 ## Steps
 
-### 1. Detect gaps
+### 1. Run gap detection
 
 ```bash
-npx specbook gaps --root .specbook --json
+npx specbook gaps --json --root .specbook
 ```
 
-Parse the JSON. If `ok: true`, tell the user "沒有偵測到缺口" and stop.
+If it fails because `.specbook` doesn't exist, tell the user:
+> 好像還沒跑過 init？請先執行 `/specbook init`。
 
-### 2. For each gap, run a focused Q&A
+If it returns `ok: true`, ask if the user wants to refine specific sections anyway:
+> 目前沒有明顯缺口，要針對特定章節（如 User Stories 或 Roadmap）再優化嗎？
 
-Process gaps in this order: `overview` → `architecture` → `user-stories` → `roadmap` (some sections feed into others).
+### 2. Prioritise gaps
 
-#### Q&A: user-stories
+Focus on `user-stories` and `roadmap` first. If `overview` or `architecture` are also flagged as placeholders, they are quick wins to include in the discussion.
 
-Ask 3 short questions, **one at a time**, waiting for answer between each:
+### 3. Interactive Q&A
 
-1. 「這個專案的目標使用者是誰？（可以給 1-3 個角色）」
-2. 「他們在使用這個工具時，最常做的 2-3 件事是什麼？」
-3. 「最讓他們痛的情境是什麼？」
+For each gap:
+1.  **Draft a suggestion** based on what you already know about the project (README, file tree).
+2.  **Ask the user** for confirmation or more details.
+    *   *Bad:* "Please tell me the roadmap."
+    *   *Good:* "I see this is a React + Supabase project. I've drafted M1 as 'MVP with Auth' and M2 as 'Realtime Sync'. Does that match your plan, or are there other priorities?"
+3.  **Iterate** until the user is happy with the content for that section.
 
-Synthesize 3-5 user stories (mix of p0/p1) using the answers. Show them as a draft to the user:
+### 4. Write back
 
-> 我整理了這幾個 stories（你可以說「保留 #1, #2, 把 #3 改成 ..., 加一條 ...」）：
+Once a section is agreed upon, use the `Write` tool to update the corresponding file in `.specbook/content/`.
 
-After confirmation (or edits), write the YAML back. See [`reference/schema-cheatsheet.md`](./reference/schema-cheatsheet.md#user-storiesyaml) for the schema.
+- See [`reference/schema-cheatsheet.md`](./reference/schema-cheatsheet.md) for schemas.
+- **Ensure no placeholder phrases remain** (e.g. "主要使用者角色", "M1 — 起手").
 
-#### Q&A: roadmap
-
-1. 「目前完成了什麼里程碑？大致花多久？」
-2. 「正在做什麼？預計什麼時候完成？」
-3. 「下一個 1-2 個里程碑會是什麼？」
-
-Synthesize a roadmap with `done` / `active` / `future` items. Confirm with user before writing.
-
-#### Q&A: overview / architecture
-
-If these are flagged as gaps (i.e. user re-runs enhance after init failed to draft them well), ask:
-
-- overview: 「能用一段話描述這個專案在解決什麼問題嗎？最常見的使用情境長怎樣？」
-- architecture: 「畫不畫圖？有的話是 mermaid 還是 image？想描述哪些主要層次或元件？」
-
-Generate a draft and confirm with user before writing.
-
-### 3. Write back with `Write` tool
-
-For each section confirmed, write the file. Each file MUST validate against the schema — see [`reference/schema-cheatsheet.md`](./reference/schema-cheatsheet.md).
-
-### 4. Re-validate
+### 5. Validate
 
 ```bash
 npx specbook validate --root .specbook
 ```
 
-If errors → fix and loop (max 3 attempts), then report to user.
+Fix any schema violations and repeat until valid.
 
-### 5. Summary
+### 6. Summary
 
-> ✅ user-stories（4 筆）
-> ✅ roadmap（3 個里程碑）
-> 已重新驗證、全部通過。下一步：`npx specbook dev` 看效果。
-
-## Tips
-
-- Don't bombard the user with all questions at once. Q&A is interactive — wait for an answer between each question.
-- If the user gives ambiguous answers, ask one clarifying follow-up; don't just guess.
-- Keep stories tight: As / Want / SoThat each one sentence, no run-on prose.
-- Roadmap items: 1-5 bullets per milestone, action-oriented ("加入 OAuth", not "我們要加入 OAuth").
+Once all agreements are written and validated:
+> ✅ Spec 已強化！User Stories 與 Roadmap 已更新並通過驗證。
+> 下一步：`npx specbook dev` 預覽，或 `npx specbook build` 產出靜態站。

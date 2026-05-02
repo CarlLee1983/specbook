@@ -5,13 +5,15 @@ export interface ConfigTemplateInput {
 
 export function renderConfigTemplate(input: ConfigTemplateInput): string {
   const lines: string[] = [
-    'export default {',
+    "import { defineConfig } from 'specbook'",
+    '',
+    'export default defineConfig({',
     '  project: {',
     `    name: ${quote(input.name)},`,
   ]
   if (input.description) lines.push(`    description: ${quote(input.description)},`)
   lines.push('  },')
-  lines.push('}')
+  lines.push('})')
   lines.push('')
   return lines.join('\n')
 }

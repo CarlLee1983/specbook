@@ -16,11 +16,12 @@ export function StoryCardGrid({ stories, chapterLabel, heading, labels }: Props)
         {stories.map((s, i) => (
           <div className="story-card" key={i}>
             <span className={`priority ${s.priority}`}>{s.priority.toUpperCase()}</span>
-            <div className="as">{labels.as}</div>
-            <div className="role-name">{s.as}</div>
+            <div className="as-block">
+              <div className="as">{labels.as}</div>
+              <div className="role-name">{s.as}</div>
+            </div>
             <div className="want">{s.want}</div>
             <div className="so-that">
-              <span className="so-that-label">{labels.soThat}</span>
               {s.soThat}
             </div>
           </div>

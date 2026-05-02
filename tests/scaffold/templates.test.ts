@@ -19,8 +19,8 @@ describe('templates', () => {
       const out = renderConfigTemplate({ name: 'TaskFlow', description: 'desc' })
       expect(out).toContain("name: 'TaskFlow'")
       expect(out).toContain("description: 'desc'")
-      expect(out).toContain('export default')
-      expect(out).not.toContain('defineConfig')
+      expect(out).toContain('defineConfig')
+      expect(out).toContain("from 'specbook'")
     })
 
     it('description 缺省時不寫該欄位', () => {

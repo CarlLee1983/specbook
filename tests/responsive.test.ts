@@ -16,10 +16,10 @@ describe('responsive CSS', () => {
     expect(css).toMatch(/@media\s*\(max-width:\s*900px\)[^}]*\{[\s\S]*?\.toc\s*\{[^}]*display:\s*none/)
   })
 
-  it('collapses stack-grid + story-grid to single column', () => {
+  it('collapses stack-grid to single column and adjusts story-card grid', () => {
     const block = css.match(/@media\s*\(max-width:\s*900px\)\s*\{([\s\S]*?)\n\}/)
     expect(block).not.toBeNull()
     expect(block![1]).toMatch(/\.stack-grid[\s\S]*grid-template-columns:\s*1fr/)
-    expect(block![1]).toMatch(/\.story-grid[\s\S]*grid-template-columns:\s*1fr/)
+    expect(block![1]).toMatch(/\.story-card[\s\S]*grid-template-columns:\s*1fr/)
   })
 })

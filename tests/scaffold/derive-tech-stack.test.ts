@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { TECH_STACK_MAP } from '../../src/scaffold/tech-stack-map.js'
+import { deriveTechStack } from '../../src/scaffold/derive-tech-stack.js'
+import { TechStackSchema } from '../../src/schema/tech-stack.js'
 
 describe('TECH_STACK_MAP', () => {
   it('包含常見前端框架', () => {
@@ -28,9 +30,6 @@ describe('TECH_STACK_MAP', () => {
     }
   })
 })
-
-import { deriveTechStack } from '../../src/scaffold/derive-tech-stack.js'
-import { TechStackSchema } from '../../src/schema/tech-stack.js'
 
 describe('deriveTechStack', () => {
   it('把已知依賴依 layer 分組', () => {

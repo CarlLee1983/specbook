@@ -16,9 +16,11 @@ describe('detectGaps', () => {
   })
 
   it('完整內容 → ok', async () => {
-    const taskflow = resolve(__dirname, '../../tests/fixtures/taskflow')
+    // 用 examples/taskflow 作為健康範本
+    const taskflow = resolve(__dirname, '../../examples/taskflow')
     const r = await detectGaps(taskflow).catch(() => null)
     if (r) {
+      if (!r.ok) console.log('Unexpected gaps:', JSON.stringify(r.gaps, null, 2))
       expect(r.ok).toBe(true)
       expect(r.gaps).toEqual([])
     }
