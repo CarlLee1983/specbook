@@ -12,3 +12,24 @@ html, body {
 
 .serif { font-family: var(--font-serif); font-weight: 500; }
 .mono { font-family: var(--font-mono); }
+
+.chapter-num {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--color-text-mute);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.hero h1 { font-size: 76px; line-height: 1.05; letter-spacing: -0.03em; margin: 8px 0 24px; }
+.hero .tagline { font-size: 22px; color: var(--color-text-soft); max-width: 640px; margin-bottom: 48px; line-height: 1.5; }
+.hero .problem {
+  border-left: 3px solid var(--accent);
+  padding: 8px 0 8px 24px;
+  font-style: italic;
+  color: var(--color-text-soft);
+  font-size: 18px;
+  max-width: 640px;
+}
