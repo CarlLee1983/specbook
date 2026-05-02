@@ -1,6 +1,4 @@
-import { defineConfig } from '../../../src/schema/config.js'
-
-export default defineConfig({
+export default {
   project: {
     name: 'TaskFlow',
     description: '同步至雲端的極簡待辦工具',
@@ -9,4 +7,4 @@ export default defineConfig({
     accent: '#4f46e5',
     locale: 'zh-TW',
   },
-})
+}

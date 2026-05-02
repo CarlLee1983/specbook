@@ -26,6 +26,16 @@ program
     process.exit(1)
   })
 
+program
+  .command('build')
+  .description('Build static site to .specbook/dist')
+  .option('-r, --root <dir>', 'Path to .specbook directory', '.specbook')
+  .option('--base <base>', 'Public base path (e.g. /repo/)')
+  .action(async (opts: { root: string; base?: string }) => {
+    const { runBuild } = await import('./build.js')
+    await runBuild({ root: resolve(process.cwd(), opts.root), base: opts.base })
+  })
+
 program.parseAsync(process.argv).catch((e) => {
   console.error(e)
   process.exit(1)
