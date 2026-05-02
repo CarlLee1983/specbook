@@ -1,0 +1,14 @@
+{
+  "name": "fresh-project",
+  "description": "用於測試 specbook init 的乾淨專案",
+  "version": "0.1.0",
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "vitest": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}
