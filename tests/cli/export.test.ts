@@ -30,4 +30,17 @@ describe('runExport', () => {
     expect(html).toContain('<main class="document">')
     expect(html).toContain('data-section="acceptance"')
   }, 120_000)
+
+  it('rejects unsupported export formats before writing files', async () => {
+    tmp = await mkdtemp(resolve(tmpdir(), 'specbook-export-invalid-'))
+    await cp(resolve(__dirname, '../fixtures/taskflow'), tmp, { recursive: true })
+
+    await expect(
+      runExport({
+        root: tmp,
+        outDir: resolve(tmp, 'dist/client-spec'),
+        formats: ['pdf' as never],
+      })
+    ).rejects.toThrow('Unsupported export format: pdf')
+  })
 })

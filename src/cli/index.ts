@@ -59,15 +59,11 @@ program
   .option('-o, --out <dir>', 'Output directory', '.specbook/dist/client-spec')
   .option('-f, --formats <list>', 'Comma-separated formats (md,html)', 'md,html')
   .action(async (opts: { root: string; out: string; formats: string }) => {
-    const { runExport } = await import('./export.js')
-    const formats = opts.formats
-      .split(',')
-      .map((s) => s.trim())
-      .filter(Boolean) as Array<'md' | 'html'>
+    const { parseExportFormats, runExport } = await import('./export.js')
     await runExport({
       root: resolve(process.cwd(), opts.root),
       outDir: resolve(process.cwd(), opts.out),
-      formats,
+      formats: parseExportFormats(opts.formats),
     })
   })
 
