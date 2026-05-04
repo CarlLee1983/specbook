@@ -14,13 +14,38 @@ export interface DevOptions {
   port?: number
 }
 
+export interface PackageRuntimePaths {
+  styles: string
+  components: string
+}
+
 export async function runDev(opts: DevOptions): Promise<void> {
   const root = opts.root
+  const devDir = await createDevEntryFiles(root)
+  const specbookPkg = await findSpecbookPkgRoot(__dirname)
+  const runtimePaths = resolvePackageRuntimePaths(resolve(specbookPkg, 'dist/cli'))
+
+  const server = await createServer({
+    configFile: false,
+    root: devDir,
+    server: { port: opts.port ?? 5173 },
+    plugins: [react(), tailwindcss(), specbookContentPlugin(root)],
+    resolve: {
+      alias: {
+        'specbook/styles/global.css': runtimePaths.styles,
+        'specbook/components': runtimePaths.components,
+      },
+    },
+  })
+  await server.listen()
+  server.printUrls()
+}
+
+export async function createDevEntryFiles(root: string): Promise<string> {
   const devDir = resolve(root, '.dev')
   await mkdir(devDir, { recursive: true })
   const entryHtml = resolve(devDir, 'index.html')
   const entryTsx = resolve(devDir, 'main.tsx')
-  const specbookPkg = await findSpecbookPkgRoot(__dirname)
 
   if (!existsSync(entryHtml)) {
     await writeFile(entryHtml, `<!DOCTYPE html>
@@ -32,27 +57,23 @@ export async function runDev(opts: DevOptions): Promise<void> {
   if (!existsSync(entryTsx)) {
     await writeFile(entryTsx, `import React from 'react'
 import { createRoot } from 'react-dom/client'
+import type { SpecBookData } from 'specbook'
 import 'specbook/styles/global.css'
 import { SpecBookPage } from 'specbook/components'
-import data from 'virtual:specbook-data'
-createRoot(document.getElementById('root')!).render(<SpecBookPage data={data as any} />)
+import rawData from 'virtual:specbook-data'
+const data = rawData as SpecBookData
+createRoot(document.getElementById('root')!).render(<SpecBookPage data={data} />)
 `)
   }
 
-  const server = await createServer({
-    configFile: false,
-    root: devDir,
-    server: { port: opts.port ?? 5173 },
-    plugins: [react(), tailwindcss(), specbookContentPlugin(root)],
-    resolve: {
-      alias: {
-        'specbook/styles/global.css': resolve(specbookPkg, 'src/styles/global.css'),
-        'specbook/components': resolve(specbookPkg, 'src/components/SpecBookPage.tsx'),
-      },
-    },
-  })
-  await server.listen()
-  server.printUrls()
+  return devDir
+}
+
+export function resolvePackageRuntimePaths(cliDir: string): PackageRuntimePaths {
+  return {
+    styles: resolve(cliDir, '../styles/global.css'),
+    components: resolve(cliDir, '../components/SpecBookPage.js'),
+  }
 }
 
 async function findSpecbookPkgRoot(startDir: string): Promise<string> {
@@ -60,7 +81,7 @@ async function findSpecbookPkgRoot(startDir: string): Promise<string> {
   for (let i = 0; i < 8; i++) {
     const pkgPath = resolve(dir, 'package.json')
     if (existsSync(pkgPath)) {
-      const pkg = JSON.parse(await readFile(pkgPath, 'utf-8'))
+      const pkg = JSON.parse(await readFile(pkgPath, 'utf-8')) as { name?: unknown }
       if (pkg.name === 'specbook') return dir
     }
     dir = resolve(dir, '..')

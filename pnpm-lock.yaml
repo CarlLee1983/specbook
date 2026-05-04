@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.2.4
+        version: 4.2.4(vite@6.4.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(yaml@2.8.4))
+      '@vitejs/plugin-react':
+        specifier: ^4.7.0
+        version: 4.7.0(vite@6.4.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(yaml@2.8.4))
       commander:
         specifier: ^14.0.3
         version: 14.0.3
@@ -26,6 +32,12 @@ importers:
       react-dom:
         specifier: ^19.2.5
         version: 19.2.5(react@19.2.5)
+      tailwindcss:
+        specifier: ^4.2.4
+        version: 4.2.4
+      vite:
+        specifier: ^6.4.2
+        version: 6.4.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(yaml@2.8.4)
       yaml:
         specifier: ^2.8.4
         version: 2.8.4
@@ -33,9 +45,6 @@ importers:
         specifier: ^4.4.2
         version: 4.4.2
     devDependencies:
-      '@tailwindcss/vite':
-        specifier: ^4.2.4
-        version: 4.2.4(vite@6.4.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(yaml@2.8.4))
       '@testing-library/jest-dom':
         specifier: ^6.9.1
         version: 6.9.1
@@ -51,9 +60,6 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.14)
-      '@vitejs/plugin-react':
-        specifier: ^4.7.0
-        version: 4.7.0(vite@6.4.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(yaml@2.8.4))
       '@vitest/ui':
         specifier: ^4.1.5
         version: 4.1.5(vitest@4.1.5)
@@ -66,15 +72,9 @@ importers:
       playwright:
         specifier: ^1.59.1
         version: 1.59.1
-      tailwindcss:
-        specifier: ^4.2.4
-        version: 4.2.4
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-      vite:
-        specifier: ^6.4.2
-        version: 6.4.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(yaml@2.8.4)
       vitest:
         specifier: ^4.1.5
         version: 4.1.5(@types/node@25.6.0)(@vitest/ui@4.1.5)(happy-dom@20.9.0)(jsdom@29.1.1)(vite@6.4.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(yaml@2.8.4))
