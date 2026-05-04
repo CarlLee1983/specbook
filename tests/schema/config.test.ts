@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { SpecBookConfigSchema, defineConfig } from '../../src/schema/config'
+import { DocumentMetadataSchema, SpecBookConfigSchema, defineConfig } from '../../src/schema/config'
 
 describe('SpecBookConfigSchema', () => {
   it('accepts minimal config (only project.name)', () => {
@@ -13,6 +13,39 @@ describe('SpecBookConfigSchema', () => {
       'user-stories',
       'roadmap',
     ])
+  })
+
+  it('accepts optional document metadata for client exports', () => {
+    const cfg = SpecBookConfigSchema.parse({
+      project: { name: 'TaskFlow' },
+      document: {
+        title: 'TaskFlow 系統規格書',
+        version: '1.2.0',
+        audience: 'Client',
+        confidentiality: 'confidential',
+      },
+    })
+
+    expect(cfg.document?.title).toBe('TaskFlow 系統規格書')
+    expect(cfg.document?.version).toBe('1.2.0')
+    expect(cfg.document?.audience).toBe('Client')
+    expect(cfg.document?.confidentiality).toBe('confidential')
+  })
+
+  it('fills default document metadata when omitted', () => {
+    const cfg = SpecBookConfigSchema.parse({
+      project: { name: 'TaskFlow' },
+    })
+
+    expect(cfg.document?.version).toBe('v1.0')
+    expect(cfg.document?.audience).toBe('Client')
+    expect(cfg.document?.confidentiality).toBe('confidential')
+  })
+
+  it('exports document metadata schema for renderer reuse', () => {
+    const doc = DocumentMetadataSchema.parse({})
+    expect(doc.version).toBe('v1.0')
+    expect(doc.audience).toBe('Client')
   })
 
   it('accepts custom accent + hide list', () => {

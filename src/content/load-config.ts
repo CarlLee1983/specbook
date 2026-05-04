@@ -9,7 +9,11 @@ export async function loadConfig(configPath: string): Promise<SpecBookConfig> {
       specbook: resolve(process.cwd(), 'src/index.ts'),
     },
   })
-  const mod: any = await jiti.import(configPath)
-  const raw = mod?.default ?? mod
+  const mod: unknown = await jiti.import(configPath)
+  const raw = isModuleWithDefault(mod) ? mod.default : mod
   return SpecBookConfigSchema.parse(raw)
+}
+
+function isModuleWithDefault(mod: unknown): mod is { default: unknown } {
+  return typeof mod === 'object' && mod !== null && 'default' in mod
 }

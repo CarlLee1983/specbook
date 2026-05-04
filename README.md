@@ -67,6 +67,7 @@ your-project/
 | `npx specbook validate` | 驗證內容符合 schema |
 | `npx specbook dev` | 本機 dev server（HMR） |
 | `npx specbook build` | 產 `.specbook/dist`（`--base /repo/` 用於 GitHub Pages 子路徑） |
+| `npx specbook export` | 輸出客戶交付用系統規格書（Markdown / HTML） |
 
 ## 客製化
 
@@ -84,6 +85,21 @@ export default defineConfig({
 ## 部署
 
 純靜態 `dist/` 適配任何 host：GitHub Pages、Vercel、Netlify、Cloudflare Pages、自家 nginx / S3。
+
+## 文件輸出（提交客戶）
+
+如果你要把 SpecBook 內容整理成可提交客戶的系統規格書，使用：
+
+```bash
+npx specbook export --root .specbook --out .specbook/dist/client-spec --formats md,html
+```
+
+這會輸出：
+
+- `system-spec.md`：適合審閱、版本控管與內部簽核
+- `system-spec.html`：可列印、可直接分享的正式文件
+
+`build` 仍然只負責網站版 SpecBook；`export` 則負責文件交付版本。
 
 ## 進階
 
