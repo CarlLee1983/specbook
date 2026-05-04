@@ -27,6 +27,8 @@ npx specbook dev
 npx specbook build
 ```
 
+> **Mermaid 圖（選用）**：若 `architecture.md` 含 ` ```mermaid` 區塊，請另外安裝 `playwright` peer dep — `pnpm add -D playwright`。沒有 mermaid 區塊時不需要。
+
 ## Claude Code Skill（建議搭配）
 
 把這個 skill 安裝到 `~/.claude/skills/specbook/`：
