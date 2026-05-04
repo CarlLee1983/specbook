@@ -34,4 +34,18 @@ describe('runBuild', () => {
       await rm(tmp2, { recursive: true, force: true })
     }
   }, 120_000)
+
+  it('uses CSS copied into dist/styles instead of unpublished src/styles', async () => {
+    const tmp3 = await mkdtemp(resolve(tmpdir(), 'specbook-build-dist-styles-'))
+    try {
+      await cp(resolve(__dirname, '../fixtures/taskflow'), tmp3, { recursive: true })
+      await runBuild({ root: tmp3 })
+      const manifest = await readFile(resolve(tmp3, 'dist/.vite/manifest.json'), 'utf-8')
+      expect(manifest).toContain('client-entry')
+      const html = await readFile(resolve(tmp3, 'dist/index.html'), 'utf-8')
+      expect(html).toMatch(/href="\/assets\/.*\.css"/)
+    } finally {
+      await rm(tmp3, { recursive: true, force: true })
+    }
+  }, 120_000)
 })

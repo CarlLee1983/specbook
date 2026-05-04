@@ -30,8 +30,7 @@ export async function runBuild(opts: BuildOptions): Promise<void> {
   }
 
   const clientEntry = resolve(__dirname, '../ssg/client-entry.js')
-  // __dirname is dist/cli at runtime; src/styles is two dirs up then into src/styles
-  const stylesDir = resolve(__dirname, '../../src/styles')
+  const stylesDir = resolve(__dirname, '../styles')
   await viteBuild({
     configFile: false,
     base,
