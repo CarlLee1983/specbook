@@ -27,6 +27,7 @@ describe('published package smoke test', () => {
     const packDir = resolve(tempRoot, 'pack')
     const appDir = resolve(tempRoot, 'app')
     const specRoot = resolve(tempRoot, 'taskflow')
+    const scaffoldProjectRoot = resolve(appDir, 'scaffolded-app')
 
     await execFileAsync('mkdir', ['-p', packDir, appDir])
 
@@ -52,6 +53,24 @@ describe('published package smoke test', () => {
       '---\ndiagram: none\n---\n\n三層：UI → 本機儲存 → 雲端同步。\n'
     )
     const cli = resolve(appDir, 'node_modules/.bin/specbook')
+
+    await execFileAsync('mkdir', ['-p', scaffoldProjectRoot])
+    await writeFile(
+      resolve(scaffoldProjectRoot, 'package.json'),
+      '{"type":"module","private":true,"name":"scaffold-package-smoke","description":"Generated config smoke"}\n'
+    )
+    await execFileAsync(cli, ['init', '--root', scaffoldProjectRoot], { cwd: appDir })
+    const generatedConfig = await readFile(
+      resolve(scaffoldProjectRoot, '.specbook/specbook.config.ts'),
+      'utf-8'
+    )
+    expect(generatedConfig).toContain("import { defineConfig } from 'specbook'")
+    const generatedValidate = await execFileAsync(
+      cli,
+      ['validate', '--root', resolve(scaffoldProjectRoot, '.specbook')],
+      { cwd: appDir }
+    )
+    expect(generatedValidate.stdout).toContain('All content valid.')
 
     const validate = await execFileAsync(cli, ['validate', '--root', specRoot], { cwd: appDir })
     expect(validate.stdout).toContain('All content valid.')

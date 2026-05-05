@@ -13,6 +13,7 @@
   --color-status-done: #4A7C59;
   --color-status-active: #D97757;
   --color-status-future: #8C847D;
+  --color-status-error: #E64833;
 
   --font-sans: 'Outfit', 'Inter', -apple-system, system-ui, "Helvetica Neue",
                "PingFang TC", "Microsoft JhengHei", sans-serif;

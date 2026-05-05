@@ -14,4 +14,18 @@ describe('renderDocumentHtml', () => {
     expect(html).toContain('data-section="acceptance"')
     expect(html).toContain('TaskFlow 系統規格書')
   })
+
+  it('uses the configured locale for the document lang attribute', async () => {
+    const data = await loadAll(resolve(__dirname, '../fixtures/taskflow'))
+    const html = renderDocumentHtml({
+      ...data,
+      config: {
+        ...data.config,
+        theme: { ...data.config.theme, locale: 'en' },
+      },
+    })
+
+    expect(html).toContain('<html lang="en">')
+    expect(html).not.toContain('<html lang="zh-TW">')
+  })
 })

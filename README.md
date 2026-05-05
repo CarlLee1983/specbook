@@ -20,12 +20,23 @@ pnpm add -D specbook
 # 2. 在專案根 scaffold（自動偵測 package.json + 依賴）
 npx specbook init
 
-# 3. 預覽
+# 3. 驗證內容
+npx specbook validate
+
+# 4. 預覽
 npx specbook dev
 
-# 4. 產出靜態站
+# 5. 產出靜態站
 npx specbook build
 ```
+
+`init` 會產生 `.specbook/specbook.config.ts`，並使用：
+
+```ts
+import { defineConfig } from 'specbook'
+```
+
+這個設定檔可在已安裝的 npm package 環境中直接被 `validate` / `dev` / `build` / `export` 載入，不需要引用專案內部 `src/` 路徑。
 
 > **Mermaid 圖（選用）**：若 `architecture.md` 含 ` ```mermaid` 區塊，請另外安裝 `playwright` peer dep — `pnpm add -D playwright`。沒有 mermaid 區塊時不需要。
 
@@ -80,6 +91,7 @@ import { defineConfig } from 'specbook'
 export default defineConfig({
   project: { name: 'TaskFlow', description: '...', url: '...' },
   theme: { accent: '#4f46e5', locale: 'zh-TW' },
+  document: { version: 'v1.0', audience: 'Client', confidentiality: 'confidential' },
   sections: { hide: [] },
 })
 ```
@@ -102,6 +114,20 @@ npx specbook export --root .specbook --out .specbook/dist/client-spec --formats 
 - `system-spec.html`：可列印、可直接分享的正式文件
 
 `build` 仍然只負責網站版 SpecBook；`export` 則負責文件交付版本。
+
+`system-spec.html` 會使用 `theme.locale` 輸出 `<html lang="...">`，因此同一份內容可以依設定產生 `zh-TW` 或 `en` 語系標記。
+
+## 品質與發佈檢查
+
+目前專案以 Vitest 驗證核心路徑：
+
+- schema 驗證：config / overview / tech-stack / architecture / user-stories / roadmap
+- CLI 行為：`init` / `validate` / `gaps` / `dev` / `build` / `export`
+- SSG 與元件：章節渲染、響應式樣式、Mermaid render、scrollspy
+- npm package smoke test：`npm pack` 後安裝到乾淨 app，驗證 installed CLI 可執行 `validate` / `build` / `export`
+- scaffold-generated config smoke test：installed CLI 產生的 `.specbook/specbook.config.ts` 可正常 `import { defineConfig } from 'specbook'`
+
+更多發佈狀態與已知邊界見 [`docs/RELEASE-READINESS.md`](./docs/RELEASE-READINESS.md)。
 
 ## 進階
 

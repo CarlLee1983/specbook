@@ -15,7 +15,7 @@ export function renderDocumentHtml(data: SpecBookData): string {
     .join('\n')
 
   return `<!doctype html>
-<html lang="zh-TW">
+<html lang="${escapeHtml(data.config.theme.locale)}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
