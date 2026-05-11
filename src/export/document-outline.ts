@@ -1,7 +1,15 @@
 import type { SpecBookData } from '../content/load-all.js'
+import type { Flow } from '../schema/architecture.js'
 import type { Milestone } from '../schema/roadmap.js'
 import type { TechLayer } from '../schema/tech-stack.js'
 import type { UserStory } from '../schema/user-stories.js'
+
+export interface DocumentOutlineSection {
+  id: string
+  heading: string
+  body: string
+  flows?: Flow[]
+}
 
 export interface DocumentOutline {
   cover: {
@@ -11,11 +19,7 @@ export interface DocumentOutline {
     audience: string
     confidentiality: string
   }
-  sections: Array<{
-    id: string
-    heading: string
-    body: string
-  }>
+  sections: DocumentOutlineSection[]
 }
 
 export function buildDocumentOutline(data: SpecBookData): DocumentOutline {
@@ -65,17 +69,7 @@ export function buildDocumentOutline(data: SpecBookData): DocumentOutline {
           '- 可交付性：文件輸出應保留正式版式，適合對外提交與留檔。',
         ].join('\n'),
       },
-      {
-        id: 'architecture',
-        heading: '系統架構',
-        body: [
-          data.architecture.body,
-          '',
-          data.architecture.diagram === 'mermaid'
-            ? '- 架構圖採 Mermaid 表達，便於在文件與網頁端共用同一份內容。'
-            : '- 架構圖以靜態圖片或純文字呈現。',
-        ].join('\n'),
-      },
+      architectureSection(data),
       {
         id: 'stack',
         heading: '技術選型',
@@ -92,6 +86,27 @@ export function buildDocumentOutline(data: SpecBookData): DocumentOutline {
         body: formatAcceptanceCriteria(data.userStories, data.roadmap),
       },
     ],
+  }
+}
+
+function architectureSection(data: SpecBookData): DocumentOutlineSection {
+  const hasFlows = (data.architecture.flows?.length ?? 0) > 0
+  const bodyLines: string[] = [data.architecture.body.trim()]
+
+  if (!hasFlows) {
+    bodyLines.push(
+      '',
+      data.architecture.diagram === 'mermaid'
+        ? '- 架構圖採 Mermaid 表達，便於在文件與網頁端共用同一份內容。'
+        : '- 架構圖以靜態圖片或純文字呈現。'
+    )
+  }
+
+  return {
+    id: 'architecture',
+    heading: '系統架構',
+    body: bodyLines.join('\n'),
+    flows: hasFlows ? data.architecture.flows : undefined,
   }
 }
 

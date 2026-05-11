@@ -24,4 +24,16 @@ describe('buildDocumentOutline', () => {
     expect(outline.sections[5].body).toContain('React')
     expect(outline.sections[6].body).toContain('2026 Q1')
   })
+
+  it('attaches flows to architecture section and suppresses mermaid hint when flows exist', async () => {
+    const data = await loadAll(resolve(__dirname, '../fixtures/taskflow'))
+    const outline = buildDocumentOutline(data)
+    const architecture = outline.sections.find((s) => s.id === 'architecture')
+
+    expect(architecture).toBeDefined()
+    expect(architecture?.flows).toBeDefined()
+    expect(architecture?.flows?.[0].name).toBe('任務同步')
+    expect(architecture?.flows?.[0].steps).toHaveLength(5)
+    expect(architecture?.body).not.toContain('架構圖採 Mermaid 表達')
+  })
 })

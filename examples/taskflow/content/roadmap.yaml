@@ -2,24 +2,26 @@
   quarter: 2026 Q1
   status: done
   items:
-    - 本機新增 / 編輯 / 完成
-    - IndexedDB 持久化
-    - 鍵盤優先操作
+    - 實作 PaperTech 核心視覺系統
+    - 建立 RxDB 離線存儲引擎
+    - 鍵盤快捷鍵 (Hotkeys) 導覽與操作
 - title: M2 — 雲端同步
   quarter: 2026 Q2
   status: active
   items:
-    - Supabase 帳號 + 多裝置同步
-    - 離線佇列與衝突解決
-    - Realtime push 更新
-- title: M3 — 共享清單
+    - Supabase Auth 與多裝置身分驗證
+    - 衝突解決演算法 (Conflict Resolution)
+    - 實時即時同步 (Real-time Sync) 機制
+- title: M3 — 共享與協作
   quarter: 2026 Q3
   status: future
   items:
-    - 列表分享連結 + 權限
-- title: M4 — Public API
+    - 清單分享連結 (View/Edit 權限)
+    - 多人編輯衝突提示
+- title: M4 — 公開生態系
   quarter: 2026 Q4
   status: future
   items:
-    - 第三方整合（Raycast、Alfred）
-    - OAuth + rate limit
+    - RESTful API 支援
+    - Raycast 與 Alfred 擴充套件
+    - 第三方 OAuth 整合

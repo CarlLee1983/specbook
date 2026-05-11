@@ -29,4 +29,43 @@ describe('ArchitectureSchema', () => {
     const r = ArchitectureSchema.parse({ diagram: 'none', body: '純文字' })
     expect(r.image).toBeUndefined()
   })
+
+  it('accepts optional flows with structured steps', () => {
+    const r = ArchitectureSchema.parse({
+      diagram: 'none',
+      body: '見下方流程',
+      flows: [
+        {
+          name: '任務同步',
+          description: '本機與雲端的兩段式同步',
+          steps: [
+            { actor: '使用者', action: '開啟 App' },
+            { actor: 'Sync Service', action: '比對 timestamp', outcome: '取得 diff' },
+          ],
+        },
+      ],
+    })
+    expect(r.flows).toHaveLength(1)
+    expect(r.flows?.[0].steps[1].outcome).toBe('取得 diff')
+  })
+
+  it('rejects flow with empty steps', () => {
+    expect(() =>
+      ArchitectureSchema.parse({
+        diagram: 'none',
+        body: 'x',
+        flows: [{ name: '空流程', steps: [] }],
+      })
+    ).toThrow()
+  })
+
+  it('rejects step without actor or action', () => {
+    expect(() =>
+      ArchitectureSchema.parse({
+        diagram: 'none',
+        body: 'x',
+        flows: [{ name: 'F', steps: [{ actor: '', action: '走一步' }] }],
+      })
+    ).toThrow()
+  })
 })

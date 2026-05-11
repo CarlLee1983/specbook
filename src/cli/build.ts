@@ -23,7 +23,10 @@ export async function runBuild(opts: BuildOptions): Promise<void> {
   const outDir = resolve(root, 'dist')
 
   const data = await loadAll(root)
-  const archBody = await renderArchitectureBody(data.architecture.body)
+  const hasFlows = (data.architecture.flows?.length ?? 0) > 0
+  const archBody = hasFlows
+    ? data.architecture.body
+    : await renderArchitectureBody(data.architecture.body)
   const dataPrepared = {
     ...data,
     architecture: { ...data.architecture, body: archBody },

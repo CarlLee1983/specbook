@@ -16,4 +16,15 @@ describe('renderDocumentMarkdown', () => {
     expect(markdown).toContain('## 驗收標準')
     expect(markdown.endsWith('\n')).toBe(true)
   })
+
+  it('renders structured flows under architecture section', async () => {
+    const data = await loadAll(resolve(__dirname, '../fixtures/taskflow'))
+    const markdown = renderDocumentMarkdown(data)
+
+    expect(markdown).toContain('### 任務同步')
+    expect(markdown).toContain('本機與雲端的兩段式同步')
+    expect(markdown).toContain('1. **使用者** — 開啟 App')
+    expect(markdown).toContain('2. **React UI** — 從本機 SQLite 讀取 cached tasks')
+    expect(markdown).toContain('   - 結果：立即顯示離線可見內容')
+  })
 })

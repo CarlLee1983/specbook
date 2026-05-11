@@ -2,12 +2,26 @@
   items:
     - name: React
       version: "19.0"
-      role: UI 元件框架
+      role: UI 框架與元件模型
+    - name: TypeScript
+      version: "5.7"
+      role: 靜態型別與邏輯描述
     - name: Tailwind CSS
       version: "4.0"
-      role: 原子化樣式
-- layer: Backend
+      role: 專業白皮書質感樣式系統
+- layer: Client State & Offline
+  items:
+    - name: TanStack Query
+      version: "5.x"
+      role: 伺服器狀態管理與快取
+    - name: RXDB
+      version: "15.x"
+      role: 本機離線資料庫 (NoSQL)
+- layer: Infrastructure
   items:
     - name: Supabase
       version: "2.x"
-      role: Postgres + Realtime
+      role: Auth, DB (Postgres) 與 Realtime 同步
+    - name: GitHub Actions
+      version: "-"
+      role: 自動化測試與 CI/CD 流程

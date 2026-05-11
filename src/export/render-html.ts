@@ -1,17 +1,22 @@
 import type { SpecBookData } from '../content/load-all.js'
+import type { Flow } from '../schema/architecture.js'
 import { buildDocumentOutline } from './document-outline.js'
 
 export function renderDocumentHtml(data: SpecBookData): string {
   const outline = buildDocumentOutline(data)
 
   const sections = outline.sections
-    .map(
-      (section) => `
+    .map((section) => {
+      const bodyHtml = renderSectionBody(stripMermaid(section.body))
+      const flowsHtml =
+        section.flows && section.flows.length > 0 ? renderFlows(section.flows) : ''
+      return `
     <section class="section" id="${section.id}" data-section="${section.id}">
       <h2>${escapeHtml(section.heading)}</h2>
-      ${renderSectionBody(section.body)}
+      ${bodyHtml}
+      ${flowsHtml}
     </section>`
-    )
+    })
     .join('\n')
 
   return `<!doctype html>
@@ -112,6 +117,72 @@ export function renderDocumentHtml(data: SpecBookData): string {
     .block p {
       margin: 0;
     }
+    .flow {
+      margin-top: 16px;
+      padding: 20px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .flow + .flow {
+      margin-top: 12px;
+    }
+    .flow h3 {
+      margin: 0;
+      font: 600 18px/1.3 Georgia, "Times New Roman", serif;
+    }
+    .flow .flow-desc {
+      margin: 6px 0 0;
+      color: var(--text-soft);
+    }
+    .flow-steps {
+      list-style: none;
+      counter-reset: flow-step;
+      margin: 16px 0 0;
+      padding: 0;
+    }
+    .flow-steps > li {
+      counter-increment: flow-step;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      column-gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+    }
+    .flow-steps > li:first-child {
+      border-top: 0;
+      padding-top: 4px;
+    }
+    .flow-steps > li::before {
+      content: counter(flow-step);
+      align-self: start;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font: 600 11px/24px ui-monospace, SFMono-Regular, monospace;
+      text-align: center;
+    }
+    .flow-actor {
+      display: inline-block;
+      padding: 2px 8px;
+      margin-bottom: 4px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 999px;
+      font: 600 11px/1.4 ui-monospace, SFMono-Regular, monospace;
+      letter-spacing: 0.04em;
+    }
+    .flow-action {
+      margin: 0;
+      font-weight: 500;
+    }
+    .flow-outcome {
+      margin: 4px 0 0;
+      color: var(--text-soft);
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -151,6 +222,39 @@ function renderSectionBody(body: string): string {
   })
 
   return rendered.join('\n')
+}
+
+function stripMermaid(body: string): string {
+  return body.replace(/```mermaid[\s\S]*?```\s*/g, '').trim()
+}
+
+function renderFlows(flows: Flow[]): string {
+  return flows
+    .map((flow) => {
+      const desc = flow.description
+        ? `<p class="flow-desc">${escapeHtml(flow.description)}</p>`
+        : ''
+      const steps = flow.steps
+        .map((step) => {
+          const outcome = step.outcome
+            ? `<p class="flow-outcome">${escapeHtml(step.outcome)}</p>`
+            : ''
+          return `<li>
+            <div>
+              <span class="flow-actor">${escapeHtml(step.actor)}</span>
+              <p class="flow-action">${escapeHtml(step.action)}</p>
+              ${outcome}
+            </div>
+          </li>`
+        })
+        .join('\n')
+      return `<article class="flow">
+        <h3>${escapeHtml(flow.name)}</h3>
+        ${desc}
+        <ol class="flow-steps">${steps}</ol>
+      </article>`
+    })
+    .join('\n')
 }
 
 function escapeHtml(value: string): string {

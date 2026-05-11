@@ -7,5 +7,6 @@ export async function loadArchitecture(filePath: string): Promise<Architecture> 
     diagram: data.diagram ?? 'none',
     image: data.image,
     body: content,
+    flows: data.flows,
   })
 }
