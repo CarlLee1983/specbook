@@ -50,18 +50,178 @@ html, body {
 .prose strong { color: var(--color-text); }
 .prose code { background: var(--color-code-bg); padding: 1px 4px; border-radius: 3px; font-size: 12px; font-family: var(--font-mono); }
 
-.flow-list { display: flex; flex-direction: column; gap: 16px; }
-.flow { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 24px 28px; }
-.flow .flow-name { font-size: 20px; line-height: 1.3; color: var(--color-text); margin-bottom: 4px; }
-.flow .flow-desc { color: var(--color-text-soft); font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
-.flow-steps { list-style: none; padding: 0; margin: 0; counter-reset: flow-step; }
-.flow-steps > li { counter-increment: flow-step; display: grid; grid-template-columns: 28px 1fr; column-gap: 12px; padding: 12px 0; border-top: 1px solid var(--color-border); }
-.flow-steps > li:first-child { border-top: 0; padding-top: 4px; }
-.flow-steps > li::before { content: counter(flow-step); align-self: start; width: 24px; height: 24px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 11px; font-weight: 600; line-height: 24px; text-align: center; }
-.flow-step-body { display: flex; flex-direction: column; gap: 4px; }
-.flow-actor { display: inline-block; align-self: start; padding: 2px 8px; background: var(--accent-soft); color: var(--accent); border-radius: 999px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
-.flow-action { font-size: 14px; color: var(--color-text); font-weight: 500; }
-.flow-outcome { font-size: 13px; color: var(--color-text-soft); line-height: 1.5; }
+/* --- PaperFlow: HTML Flowcharts --- */
+.flow-list { display: flex; flex-direction: column; gap: 32px; }
+.flow { 
+  background: var(--color-bg); 
+  border: 1px dashed var(--color-border); 
+  border-radius: var(--border-radius); 
+  padding: 32px; 
+}
+.flow .flow-name { 
+  font-size: 24px; 
+  color: var(--color-text); 
+  margin-bottom: 8px; 
+  text-align: center;
+}
+.flow .flow-desc { 
+  color: var(--color-text-soft); 
+  font-size: 14px; 
+  text-align: center;
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flow-steps { 
+  list-style: none; 
+  padding: 0; 
+  margin: 0; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flow-steps > li { 
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  padding-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Vertical Connection Line */
+.flow-steps > li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--color-border);
+  z-index: 0;
+}
+
+.flow-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 22px;
+  text-align: center;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.flow-step-body { 
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 16px 20px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  position: relative;
+  z-index: 1;
+  transition: border-color 0.2s;
+}
+
+.flow-step-body:hover {
+  border-color: var(--color-accent);
+}
+
+.is-decision .flow-step-num {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.flow-branches {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.branch {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.branch-label {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+.branch-content {
+  background: var(--color-bg);
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px dashed var(--color-border);
+}
+
+.branch-content .flow-action {
+  font-size: 13px;
+}
+
+.branch-content .flow-outcome {
+  font-size: 11px;
+}
+
+.flow-actor { 
+  display: inline-block; 
+  padding: 2px 8px; 
+  background: var(--color-accent-soft); 
+  color: var(--color-accent); 
+  border-radius: 4px; 
+  font-family: var(--font-mono); 
+  font-size: 10px; 
+  font-weight: 700; 
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.flow-action { 
+  font-size: 15px; 
+  color: var(--color-text); 
+  font-weight: 500; 
+  margin: 0;
+  line-height: 1.5;
+}
+
+.flow-outcome { 
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--color-border);
+  font-size: 13px; 
+  color: var(--color-text-soft); 
+  font-style: italic;
+}
+.flow-outcome::before {
+  content: "→ ";
+  color: var(--color-accent);
+  font-style: normal;
+}
 
 .story-grid { display: grid; grid-template-columns: 1fr; gap: 8px; } /* More structured table-like list */
 .story-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 20px; position: relative; display: grid; grid-template-columns: 100px 1fr 2fr; gap: 24px; align-items: center; }

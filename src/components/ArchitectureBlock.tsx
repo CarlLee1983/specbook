@@ -50,11 +50,26 @@ function FlowList({ flows }: { flows: Flow[] }) {
           {flow.description && <p className="flow-desc">{flow.description}</p>}
           <ol className="flow-steps">
             {flow.steps.map((step, idx) => (
-              <li key={`${flow.name}-${idx}`}>
+              <li key={`${flow.name}-${idx}`} className={step.branches ? 'is-decision' : ''}>
+                <div className="flow-step-num">{step.branches ? '?' : idx + 1}</div>
                 <div className="flow-step-body">
-                  <span className="flow-actor">{step.actor}</span>
+                  {step.actor && <span className="flow-actor">{step.actor}</span>}
                   <p className="flow-action">{step.action}</p>
                   {step.outcome && <p className="flow-outcome">{step.outcome}</p>}
+
+                  {step.branches && (
+                    <div className="flow-branches">
+                      {step.branches.map((branch, bIdx) => (
+                        <div className="branch" key={bIdx}>
+                          <span className="branch-label">{branch.label}</span>
+                          <div className="branch-content">
+                            <p className="flow-action">{branch.action}</p>
+                            {branch.outcome && <p className="flow-outcome">{branch.outcome}</p>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </li>
             ))}

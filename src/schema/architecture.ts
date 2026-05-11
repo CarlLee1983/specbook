@@ -1,9 +1,18 @@
 import { z } from 'zod'
 
 export const FlowStepSchema = z.object({
-  actor: z.string().min(1, 'step.actor 不可為空'),
+  actor: z.string().min(1).optional(),
   action: z.string().min(1, 'step.action 不可為空'),
   outcome: z.string().min(1).optional(),
+  branches: z
+    .array(
+      z.object({
+        label: z.string().min(1, 'branch.label 不可為空'),
+        action: z.string().min(1, 'branch.action 不可為空'),
+        outcome: z.string().optional(),
+      })
+    )
+    .optional(),
 })
 
 export const FlowSchema = z.object({
