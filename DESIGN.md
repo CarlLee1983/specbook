@@ -1,83 +1,83 @@
 # SpecBook Design System: PaperTech
 
-> 本文件定義 SpecBook 的視覺語彙與設計哲學（PaperTech）。這是元件實作與樣式對齊的單一來源。
+> This document defines the visual language and design philosophy of SpecBook (PaperTech). It serves as the single source of truth for component implementation and style alignment.
 
-## 1. 設計哲學 (Design Philosophy)
+## 1. Design Philosophy
 
-**PaperTech** 旨在縮短「決策者」與「AI 代理人」之間的距離。設計風格基準為現代技術白皮書與高品質開發者工具，傳遞 **「溫暖、專業、資訊高密度」** 的數位文檔感。
+**PaperTech** aims to bridge the gap between "Decision Makers" and "AI Agents." Inspired by modern technical white papers and high-quality developer tools, the design conveys a **"Warm, Professional, and Information-Dense"** digital document feel.
 
-- **專業密度 (Professional Density)**：採用高資訊密度排版，透過細線 (1px) 與細微的背景層級（Surface vs Background）區分章節。
-- **有機暖色 (Warm & Organic)**：捨棄冷色系的黑綠配色，改用暖米色、濃縮咖啡棕與陶土橘，減少閱讀長篇規格書時的視覺疲勞。
-- **技術精準 (Technical Precision)**：導覽與技術術語採用等寬字體 (Monospace)，強調規格書的嚴謹性。
+- **Professional Density**: Employs high-information density layouts, using thin lines (1px) and subtle background elevations (Surface vs. Background) to distinguish sections.
+- **Warm & Organic**: Eschews cold black-and-green schemes in favor of warm beige, espresso brown, and terracotta orange, reducing visual fatigue during long reading sessions of specifications.
+- **Technical Precision**: Uses Monospace fonts for navigation and technical terminology to emphasize the rigor of the specification.
 
-## 2. 顏色系統 (Colors)
+## 2. Color System
 
-| Token | 值 | 用途 |
+| Token | Value | Usage |
 |---|---|---|
-| `--color-bg` | `#F9F5F1` | 頁面背景（紙感暖米） |
-| `--color-surface` | `#FFFFFF` | 卡片底色 |
-| `--color-text` | `#2D2621` | 主要文字（深咖啡） |
-| `--color-text-soft` | `#635C55` | 次要文字 / 說明文 |
-| `--color-text-mute` | `#8C847D` | 輔助文字 / 禁用狀態 |
-| `--color-border` | `#E5E0DA` | 邊框、分隔線 |
-| `--color-accent` | `#D97757` | 強調色（陶土橘） |
-| `--color-accent-soft` | `#F9EBE6` | 強調色洗白（背景用） |
-| `--color-code-bg` | `#F0EDE8` | 程式碼 / 標籤背景 |
-| `--color-status-done` | `#4A7C59` | 完成狀態 |
-| `--color-status-active` | `#D97757` | 進行中狀態 |
-| `--color-status-error` | `#E64833` | 錯誤 / P0 優先級 |
+| `--color-bg` | `#F9F5F1` | Page Background (Paper-like warm beige) |
+| `--color-surface` | `#FFFFFF` | Card surface color |
+| `--color-text` | `#2D2621` | Primary text (Deep espresso) |
+| `--color-text-soft` | `#635C55` | Secondary text / Descriptions |
+| `--color-text-mute` | `#8C847D` | Tertiary text / Disabled states |
+| `--color-border` | `#E5E0DA` | Borders and dividers |
+| `--color-accent` | `#D97757` | Accent color (Terracotta orange) |
+| `--color-accent-soft` | `#F9EBE6` | Faded accent (for backgrounds) |
+| `--color-code-bg` | `#F0EDE8` | Code / Label background |
+| `--color-status-done` | `#4A7C59` | Completed status |
+| `--color-status-active` | `#D97757` | In-progress status |
+| `--color-status-error` | `#E64833` | Error / P0 Priority |
 
-## 3. 字體與排版 (Typography)
+## 3. Typography
 
-### 字型 Stack
-- **Sans (主要)**：`'Outfit'`, `'Inter'`, system-ui, sans-serif
-- **Serif (標題)**：`"Iowan Old Style"`, `"Palatino Linotype"`, Palatino, Georgia, serif
-- **Mono (技術)**：`'JetBrains Mono'`, `'Roboto Mono'`, monospace
+### Font Stack
+- **Sans (Primary)**: `'Outfit'`, `'Inter'`, system-ui, sans-serif
+- **Serif (Headings)**: `"Iowan Old Style"`, `"Palatino Linotype"`, Palatino, Georgia, serif
+- **Mono (Technical)**: `'JetBrains Mono'`, `'Roboto Mono'`, monospace
 
-### 階層
-- **Hero H1**：64px / 1.1 (Serif)
-- **Section H2**：32px / 1.2 (Serif)
-- **Tagline**：20px / 1.5 (Sans)
-- **Body**：14px / 1.6 (Sans) - *高密度基準*
-- **Label**：10px / Uppercase (Mono)
+### Hierarchy
+- **Hero H1**: 64px / 1.1 (Serif)
+- **Section H2**: 32px / 1.2 (Serif)
+- **Tagline**: 20px / 1.5 (Sans)
+- **Body**: 14px / 1.6 (Sans) - *High-density baseline*
+- **Label**: 10px / Uppercase (Mono)
 
-## 4. 佈局原則 (Layout & Spacing)
+## 4. Layout & Spacing
 
-- **單位**：基於 4px 網格系統。
-- **邊框**：統一使用 1px 實線或虛線，強化專業白皮書質感。
-- **圓角**：`--border-radius: 6px`，提供現代且溫和的視覺感。
-- **間距**：
-  * 章節間：`64px` (Desktop) / `48px` (Mobile)
-  * 左右內距：`40px` (Desktop) / `20px` (Mobile)
+- **Units**: Based on a 4px grid system.
+- **Borders**: Uniform use of 1px solid or dashed lines to enhance the professional white paper aesthetic.
+- **Border Radius**: `--border-radius: 6px`, providing a modern yet gentle visual feel.
+- **Spacing**:
+  * Between sections: `64px` (Desktop) / `48px` (Mobile)
+  * Side padding: `40px` (Desktop) / `20px` (Mobile)
 
-## 5. 元件規格 (Component Specs)
+## 5. Component Specs
 
 ### HeroSection
-- **章節編號**：Mono 11px, Uppercase, Mute 顏色。
-- **問題陳述 (Problem)**：2px accent 左邊框, Italic, 16px soft 顏色。
+- **Section Numbers**: Mono 11px, Uppercase, Mute color.
+- **Problem Statement**: 2px accent left border, Italic, 16px soft color.
 
 ### StackGrid
-- **卡片**：1px border, 6px 圓角。
-- **Tech Icon**：22px 方塊, `accent-soft` 底, `accent` 字色。
+- **Cards**: 1px border, 6px border radius.
+- **Tech Icon**: 22px square, `accent-soft` background, `accent` foreground color.
 
 ### StoryCardGrid (Structured Table)
-- **佈局**：Desktop 採 3 欄 Grid（100px / 1fr / 2fr），模擬結構化表格。
-- **優先級角標**：P0 紅底白字、P1 橘底白字、P2 灰底。
-- **SoThat 區塊**：左側 1px 實線分隔，強化閱讀節奏。
+- **Layout**: Desktop uses a 3-column Grid (100px / 1fr / 2fr), simulating a structured table.
+- **Priority Badges**: P0 (white text on red), P1 (white text on orange), P2 (gray background).
+- **SoThat Block**: Separated by a 1px solid line on the left to enhance reading rhythm.
 
 ### Timeline
-- **軸線**：1px 粗細。
-- **節點**：10px 圓點；Active 狀態帶有同色光暈。
+- **Axis**: 1px thickness.
+- **Nodes**: 10px dots; Active state includes a glow of the same color.
 
 ### TocSidebar
-- **導覽項**：Mono 12px, Mute 顏色。
-- **Active 狀態**：粗體 (700) + 1px accent 下底線。
+- **Navigation Items**: Mono 12px, Mute color.
+- **Active State**: Bold (700) + 1px accent underline.
 
-## 6. 狀態與互動 (Interactions)
+## 6. States & Interactions
 
-- **Hover**：卡片微幅上抬 1px + 邊框轉為 `accent`。
-- **轉場**：採用細微的透明度淡入 (Opacity Fade-in)，模擬翻頁感。
+- **Hover**: Cards lift slightly by 1px + border changes to `accent`.
+- **Transitions**: Subtle opacity fade-in to simulate turning a page.
 
 ---
 
-_註：此文件隨設計系統演進而更新，作為實作的單一來源。_
+_Note: This document is updated as the design system evolves and serves as the single source of truth for implementation._
