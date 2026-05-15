@@ -1,10 +1,13 @@
 # SpecBook
 
 <!-- doc-key: overview -->
-把專案 spec 變成有節奏感的單頁站
+把專案 spec 變成有節奏感的單頁站。
 
-> Replace this paragraph with a one-paragraph overview of what
-> SpecBook does and who it is for.
+SpecBook 是一個專為「軟體專案規格書」設計的靜態站產生器。它把任何專案的 spec 收斂成五個固定章節（Overview、Tech Stack、Architecture、User Stories、Roadmap），產出可直接部署的單頁站。
+
+寫 README 不夠正式、開 Notion 容易散、自架 Docusaurus 設定成本高。SpecBook 把這三者中間的痛點打掉：schema 由 zod 鎖死、視覺由 PaperTech 設計系統收斂、產出是純靜態 HTML，丟到任何 host 都能跑。
+
+適合需要把專案技術決策、進度與 user stories 整理給內部團隊或外部客戶看的軟體專案團隊與技術負責人。
 
 ---
 

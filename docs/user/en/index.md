@@ -1,10 +1,13 @@
 # SpecBook
 
 <!-- doc-key: overview -->
-把專案 spec 變成有節奏感的單頁站
+Turn your project spec into a single-page site with rhythm.
 
-> Replace this paragraph with a one-paragraph overview of what
-> SpecBook does and who it is for.
+SpecBook is a static site generator built specifically for software project specifications. It compresses any project's spec into five fixed chapters (Overview, Tech Stack, Architecture, User Stories, Roadmap) and produces a deployable single-page site.
+
+READMEs feel too casual, Notion pages drift, and self-hosting Docusaurus is expensive to set up. SpecBook closes that gap: zod-locked schemas, the PaperTech design system for visual consistency, and pure-static HTML output that runs on any host.
+
+It's aimed at software project teams and technical leads who need to surface architecture decisions, progress, and user stories — for internal alignment or client delivery.
 
 ---
 
