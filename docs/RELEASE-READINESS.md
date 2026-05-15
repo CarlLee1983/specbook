@@ -53,8 +53,8 @@ pnpm test
 最近一次驗證結果：
 
 ```text
-Test Files  45 passed (45)
-Tests       145 passed (145)
+Test Files  52 passed (52)
+Tests       199 passed (199)
 ```
 
 ## UI / PaperTech 狀態

@@ -2,6 +2,7 @@
 import { Command } from 'commander'
 import { resolve } from 'node:path'
 import { runValidate } from './validate.js'
+import { createDocsCommand } from './docs.js'
 
 const program = new Command()
 
@@ -89,6 +90,8 @@ program
     if (r.stderr) process.stderr.write(r.stderr + '\n')
     process.exit(r.exitCode)
   })
+
+program.addCommand(createDocsCommand())
 
 program.parseAsync(process.argv).catch((e) => {
   console.error(e)

@@ -40,6 +40,19 @@ import { defineConfig } from 'specbook'
 
 > **Mermaid 圖（選用）**：若 `architecture.md` 含 ` ```mermaid` 區塊，請另外安裝 `playwright` peer dep — `pnpm add -D playwright`。沒有 mermaid 區塊時不需要。
 
+## User documentation（選用）
+
+如果你想要把使用者文件也託管在 SpecBook 內：
+
+```bash
+npx specbook docs init --locales zh-TW,en --tagline "..."
+npx specbook docs validate
+npx specbook docs dev
+npx specbook docs build
+```
+
+詳見 `docs/superpowers/specs/2026-05-15-user-docs-integration-design.md`。
+
 ## Claude Code Skill（建議搭配）
 
 把這個 skill 安裝到 `~/.claude/skills/specbook/`：
