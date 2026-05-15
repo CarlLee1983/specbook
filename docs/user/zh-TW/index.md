@@ -132,10 +132,34 @@ npx specbook export --formats md      # 只輸出 markdown
 兩 locale 對應的內建字串放在 npm package 內的 `i18n/{zh-TW,en}.ts`；v1 不支援逐字串覆寫，需要時可開 issue 討論。
 
 <!-- doc-key: diagnostics-recovery -->
-## Diagnostics / recovery
+## 診斷與修復
 
-> `doctor`-style health checks, error recovery workflows, structured
-> error output for AI consumers.
+當 `dev` 或 `build` 印錯誤、或站台看起來怪怪的，先跑 `validate` 找 schema 問題：
+
+```bash
+npx specbook validate
+```
+
+常見錯誤類型：
+
+- `[overview] ...`／`[tech-stack] ...` 字首：對應章節 frontmatter 或 yaml 有 schema mismatch（如缺欄位、型別錯誤）。逐項 `.specbook/content/<file>` 對照訊息修正。
+- `找不到 .specbook 目錄`：你不在專案根目錄，或還沒跑過 `init`。
+- `Cannot find module 'specbook'`：dev dependency 沒裝好；重跑 `pnpm install`。
+
+`specbook gaps` 在 schema 通過後仍可能回報尚未填寫的章節（例如 user-stories 全是 placeholder）。它不會擋 build，但有缺口時客戶交付不夠完整：
+
+```bash
+npx specbook gaps
+```
+
+需要重新 scaffold 時務必先確認重要內容已 commit。`init --force` 會直接覆寫既有 `.specbook/content/` 檔案，無 undo：
+
+```bash
+git status            # 確認沒有未提交的內容
+npx specbook init --force
+```
+
+仍有問題？開 issue：[github.com/carl-ee/specbook/issues](https://github.com/carl-ee/specbook/issues)。請附 `validate` / `gaps` 完整輸出、`.specbook/specbook.config.ts`，與 `node --version`。
 
 <!-- doc-key: ai-integration -->
 ## AI-agent integration

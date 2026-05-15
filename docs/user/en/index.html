@@ -177,7 +177,20 @@ npx specbook export --formats md      # markdown only</code></pre>
         <!-- doc-key: diagnostics-recovery -->
         <section id="diagnostics-recovery">
             <h2>Diagnostics / recovery</h2>
-            <p>Replace this paragraph with diagnostic and recovery docs.</p>
+            <p>When <code>dev</code> or <code>build</code> prints errors, or the rendered site looks off, start with <code>validate</code> to find schema issues:</p>
+<pre><code>npx specbook validate</code></pre>
+            <p>Common errors:</p>
+            <ul>
+                <li><code>[overview] ...</code> / <code>[tech-stack] ...</code> prefix: a schema mismatch in that chapter's frontmatter or yaml (missing field, wrong type). Open <code>.specbook/content/&lt;file&gt;</code> and fix the field called out in the message.</li>
+                <li><code>找不到 .specbook 目錄</code> / <code>.specbook not found</code>: you are not at the project root, or <code>init</code> has not been run yet.</li>
+                <li><code>Cannot find module 'specbook'</code>: the dev dependency is not installed; rerun <code>pnpm install</code>.</li>
+            </ul>
+            <p><code>specbook gaps</code> can still report unfinished chapters (for example, all-placeholder user stories) even after <code>validate</code> passes. Gaps do not block <code>build</code>, but they leave the client-facing export incomplete:</p>
+<pre><code>npx specbook gaps</code></pre>
+            <p>Before re-scaffolding, commit anything important. <code>init --force</code> overwrites existing files in <code>.specbook/content/</code> with no undo:</p>
+<pre><code>git status            # confirm no uncommitted changes
+npx specbook init --force</code></pre>
+            <p>Still stuck? File an issue: <a href="https://github.com/carl-ee/specbook/issues">github.com/carl-ee/specbook/issues</a>. Include the full <code>validate</code> / <code>gaps</code> output, your <code>.specbook/specbook.config.ts</code>, and <code>node --version</code>.</p>
         </section>
 
         <!-- doc-key: ai-integration -->

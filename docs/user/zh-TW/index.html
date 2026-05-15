@@ -176,8 +176,21 @@ npx specbook export --formats md      # 只輸出 markdown</code></pre>
 
         <!-- doc-key: diagnostics-recovery -->
         <section id="diagnostics-recovery">
-            <h2>Diagnostics / recovery</h2>
-            <p>Replace this paragraph with diagnostic and recovery docs.</p>
+            <h2>診斷與修復</h2>
+            <p>當 <code>dev</code> 或 <code>build</code> 印錯誤、或站台看起來怪怪的，先跑 <code>validate</code> 找 schema 問題：</p>
+<pre><code>npx specbook validate</code></pre>
+            <p>常見錯誤類型：</p>
+            <ul>
+                <li><code>[overview] ...</code>／<code>[tech-stack] ...</code> 字首：對應章節 frontmatter 或 yaml 有 schema mismatch（如缺欄位、型別錯誤）。逐項 <code>.specbook/content/&lt;file&gt;</code> 對照訊息修正。</li>
+                <li><code>找不到 .specbook 目錄</code>：你不在專案根目錄，或還沒跑過 <code>init</code>。</li>
+                <li><code>Cannot find module 'specbook'</code>：dev dependency 沒裝好；重跑 <code>pnpm install</code>。</li>
+            </ul>
+            <p><code>specbook gaps</code> 在 schema 通過後仍可能回報尚未填寫的章節（例如 user-stories 全是 placeholder）。它不會擋 build，但有缺口時客戶交付不夠完整：</p>
+<pre><code>npx specbook gaps</code></pre>
+            <p>需要重新 scaffold 時務必先確認重要內容已 commit。<code>init --force</code> 會直接覆寫既有 <code>.specbook/content/</code> 檔案，無 undo：</p>
+<pre><code>git status            # 確認沒有未提交的內容
+npx specbook init --force</code></pre>
+            <p>仍有問題？開 issue：<a href="https://github.com/carl-ee/specbook/issues">github.com/carl-ee/specbook/issues</a>。請附 <code>validate</code> / <code>gaps</code> 完整輸出、<code>.specbook/specbook.config.ts</code>，與 <code>node --version</code>。</p>
         </section>
 
         <!-- doc-key: ai-integration -->

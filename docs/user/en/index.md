@@ -134,8 +134,32 @@ The built-in i18n strings live in `i18n/{zh-TW,en}.ts` inside the npm package. v
 <!-- doc-key: diagnostics-recovery -->
 ## Diagnostics / recovery
 
-> `doctor`-style health checks, error recovery workflows, structured
-> error output for AI consumers.
+When `dev` or `build` prints errors, or the rendered site looks off, start with `validate` to find schema issues:
+
+```bash
+npx specbook validate
+```
+
+Common errors:
+
+- `[overview] ...` / `[tech-stack] ...` prefix: a schema mismatch in that chapter's frontmatter or yaml (missing field, wrong type). Open `.specbook/content/<file>` and fix the field called out in the message.
+- `找不到 .specbook 目錄` / `.specbook not found`: you are not at the project root, or `init` has not been run yet.
+- `Cannot find module 'specbook'`: the dev dependency is not installed; rerun `pnpm install`.
+
+`specbook gaps` can still report unfinished chapters (for example, all-placeholder user stories) even after `validate` passes. Gaps do not block `build`, but they leave the client-facing export incomplete:
+
+```bash
+npx specbook gaps
+```
+
+Before re-scaffolding, commit anything important. `init --force` overwrites existing files in `.specbook/content/` with no undo:
+
+```bash
+git status            # confirm no uncommitted changes
+npx specbook init --force
+```
+
+Still stuck? File an issue: [github.com/carl-ee/specbook/issues](https://github.com/carl-ee/specbook/issues). Include the full `validate` / `gaps` output, your `.specbook/specbook.config.ts`, and `node --version`.
 
 <!-- doc-key: ai-integration -->
 ## AI-agent integration
