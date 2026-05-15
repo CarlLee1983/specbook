@@ -222,8 +222,18 @@ cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook</code></pre
 
         <!-- doc-key: visual-surfaces -->
         <section id="visual-surfaces">
-            <h2>Visual / dashboard surfaces</h2>
-            <p>Replace this paragraph with HTML / dashboard / report docs.</p>
+            <h2>視覺輸出</h2>
+            <p>SpecBook 有三個視覺面向：</p>
+            <p><strong>Dev 預覽</strong>：<code>specbook dev</code> 啟動 vite dev server，預設在 <code>http://localhost:5173</code>，編輯 <code>.specbook/content/</code> 任何檔案即時熱重載。畫面採用 SpecBook 內建的 PaperTech 設計系統（暖色基底、espresso 棕字體、terracotta 橘 accent、1px hairline）。</p>
+            <p><strong>靜態站</strong>：<code>specbook build</code> 產出 <code>.specbook/dist/</code>，是純 HTML/CSS/JS 的單頁站。可丟到任何靜態 host：</p>
+            <ul>
+                <li>GitHub Pages（記得 <code>--base /repo/</code>）</li>
+                <li>Vercel／Netlify／Cloudflare Pages（拖 <code>dist/</code> 即可）</li>
+                <li>自家 nginx / S3 / Cloudflare R2</li>
+            </ul>
+            <p><code>dist/</code> 包含 <code>index.html</code>、<code>sitemap.xml</code>、<code>assets/</code>，無外部 runtime 依賴。</p>
+            <p><strong>客戶交付</strong>：<code>specbook export</code> 產出 <code>.specbook/dist/client-spec/system-spec.{md,html}</code>。HTML 版可直接在瀏覽器列印或分享，<code>&lt;html lang="..."&gt;</code> 標記由 <code>theme.locale</code> 決定（zh-TW 或 en），可直接 email 給客戶。</p>
+            <p>完整設計規範請參考 repo 內 <a href="https://github.com/carl-ee/specbook/blob/main/DESIGN.md"><code>DESIGN.md</code></a>（PaperTech / Vector-inspired）；自訂主題目前 v1 不開放，v2 規劃 <code>specbook eject</code>。</p>
         </section>
 
         <!-- doc-key: documentation-maintenance -->

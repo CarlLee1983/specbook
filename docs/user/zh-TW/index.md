@@ -192,9 +192,23 @@ cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook
 skill 內附 `reference/schema-cheatsheet.md`，agent 寫入前可先讀，降低 schema 違規率。也可搭配 `superpowers` 等其他 skill 組合 brainstorm → execute → validate 的循環。
 
 <!-- doc-key: visual-surfaces -->
-## Visual / dashboard surfaces
+## 視覺輸出
 
-> Any HTML report, dashboard, or visual output the tool produces.
+SpecBook 有三個視覺面向：
+
+**Dev 預覽**：`specbook dev` 啟動 vite dev server，預設在 `http://localhost:5173`，編輯 `.specbook/content/` 任何檔案即時熱重載。畫面採用 SpecBook 內建的 PaperTech 設計系統（暖色基底、espresso 棕字體、terracotta 橘 accent、1px hairline）。
+
+**靜態站**：`specbook build` 產出 `.specbook/dist/`，是純 HTML/CSS/JS 的單頁站。可丟到任何靜態 host：
+
+- GitHub Pages（記得 `--base /repo/`）
+- Vercel／Netlify／Cloudflare Pages（拖 `dist/` 即可）
+- 自家 nginx / S3 / Cloudflare R2
+
+`dist/` 包含 `index.html`、`sitemap.xml`、`assets/`，無外部 runtime 依賴。
+
+**客戶交付**：`specbook export` 產出 `.specbook/dist/client-spec/system-spec.{md,html}`。HTML 版可直接在瀏覽器列印或分享，`<html lang="...">` 標記由 `theme.locale` 決定（zh-TW 或 en），可直接 email 給客戶。
+
+完整設計規範請參考 repo 內 [`DESIGN.md`](https://github.com/carl-ee/specbook/blob/main/DESIGN.md)（PaperTech / Vector-inspired）；自訂主題目前 v1 不開放，v2 規劃 `specbook eject`。
 
 <!-- doc-key: documentation-maintenance -->
 ## Documentation maintenance

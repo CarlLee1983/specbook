@@ -223,7 +223,17 @@ cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook</code></pre
         <!-- doc-key: visual-surfaces -->
         <section id="visual-surfaces">
             <h2>Visual / dashboard surfaces</h2>
-            <p>Replace this paragraph with HTML / dashboard / report docs.</p>
+            <p>SpecBook produces three visual surfaces:</p>
+            <p><strong>Dev preview</strong>: <code>specbook dev</code> starts a Vite dev server, by default at <code>http://localhost:5173</code>, with hot reload for any edit under <code>.specbook/content/</code>. The interface uses SpecBook's built-in PaperTech design system (warm base, espresso brown text, terracotta accent, 1px hairlines).</p>
+            <p><strong>Static site</strong>: <code>specbook build</code> outputs <code>.specbook/dist/</code> as a self-contained HTML/CSS/JS single-page site. Drop it on any static host:</p>
+            <ul>
+                <li>GitHub Pages (remember <code>--base /repo/</code>)</li>
+                <li>Vercel / Netlify / Cloudflare Pages (drag-and-drop <code>dist/</code>)</li>
+                <li>Your own nginx / S3 / Cloudflare R2</li>
+            </ul>
+            <p><code>dist/</code> contains <code>index.html</code>, <code>sitemap.xml</code>, and <code>assets/</code>, with no external runtime dependency.</p>
+            <p><strong>Client deliverable</strong>: <code>specbook export</code> produces <code>.specbook/dist/client-spec/system-spec.{md,html}</code>. The HTML version can be printed or shared straight from the browser; <code>&lt;html lang="..."&gt;</code> is stamped from <code>theme.locale</code> (zh-TW or en), so the file is ready to email to clients.</p>
+            <p>The full design spec lives in the repo at <a href="https://github.com/carl-ee/specbook/blob/main/DESIGN.md"><code>DESIGN.md</code></a> (PaperTech / Vector-inspired). Custom theming is not exposed in v1; v2 plans a <code>specbook eject</code> workflow.</p>
         </section>
 
         <!-- doc-key: documentation-maintenance -->

@@ -194,7 +194,21 @@ The skill ships `reference/schema-cheatsheet.md`, which the agent should read be
 <!-- doc-key: visual-surfaces -->
 ## Visual / dashboard surfaces
 
-> Any HTML report, dashboard, or visual output the tool produces.
+SpecBook produces three visual surfaces:
+
+**Dev preview**: `specbook dev` starts a Vite dev server, by default at `http://localhost:5173`, with hot reload for any edit under `.specbook/content/`. The interface uses SpecBook's built-in PaperTech design system (warm base, espresso brown text, terracotta accent, 1px hairlines).
+
+**Static site**: `specbook build` outputs `.specbook/dist/` as a self-contained HTML/CSS/JS single-page site. Drop it on any static host:
+
+- GitHub Pages (remember `--base /repo/`)
+- Vercel / Netlify / Cloudflare Pages (drag-and-drop `dist/`)
+- Your own nginx / S3 / Cloudflare R2
+
+`dist/` contains `index.html`, `sitemap.xml`, and `assets/`, with no external runtime dependency.
+
+**Client deliverable**: `specbook export` produces `.specbook/dist/client-spec/system-spec.{md,html}`. The HTML version can be printed or shared straight from the browser; `<html lang="...">` is stamped from `theme.locale` (zh-TW or en), so the file is ready to email to clients.
+
+The full design spec lives in the repo at [`DESIGN.md`](https://github.com/carl-ee/specbook/blob/main/DESIGN.md) (PaperTech / Vector-inspired). Custom theming is not exposed in v1; v2 plans a `specbook eject` workflow.
 
 <!-- doc-key: documentation-maintenance -->
 ## Documentation maintenance
