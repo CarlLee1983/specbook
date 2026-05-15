@@ -213,6 +213,35 @@ The full design spec lives in the repo at [`DESIGN.md`](https://github.com/carl-
 <!-- doc-key: documentation-maintenance -->
 ## Documentation maintenance
 
-> How these docs stay aligned: the doc-key contract, multi-locale
-> policy, and `bun run docs:check`.
+This user manual stays honest via a "dual-format × dual-locale" layout:
+
+```
+docs/user/
+  zh-TW/{index.md, index.html}
+  en/{index.md, index.html}
+```
+
+Each section starts with a doc-key marker (uppercase below is a placeholder; real keys are lowercase kebab-case):
+
+```html
+<!-- doc-key: SECTION-KEY -->
+```
+
+The validator lives in `scripts/check-user-docs.ts` and runs via `pnpm docs:check`. It checks:
+
+- No duplicate doc-keys within a single file
+- Every file contains every key listed in `requiredDocKeys`
+- Markdown and HTML doc-key order match within the same locale
+
+It does not enforce ordering between `zh-TW` and `en`, but by convention **both locales should stay in sync** — every new section should land in all four files at once.
+
+**Adding a new section**:
+
+1. Edit `scripts/check-user-docs.ts` and append the new key to `requiredDocKeys`
+2. Insert `<!-- doc-key: NEW-KEY -->` (real key: lowercase kebab) at the same position in all four files
+3. Write the prose
+4. Run `pnpm docs:check` and only commit when it passes
+5. Land everything in a single commit
+
+**Roadmap**: Stage B will fold the validator into a built-in `specbook docs validate` CLI; Stage A′ removes this `scripts/check-user-docs.ts` and the `docs:check` script. Once that lands, SpecBook fully dogfoods itself and the external bun dependency goes away.
 

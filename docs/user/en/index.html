@@ -239,9 +239,28 @@ cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook</code></pre
         <!-- doc-key: documentation-maintenance -->
         <section id="documentation-maintenance">
             <h2>Documentation maintenance</h2>
-            <p>Replace this paragraph with the doc-key contract summary,
-            multi-locale policy, and <code>bun run docs:check</code>
-            instructions.</p>
+            <p>This user manual stays honest via a "dual-format × dual-locale" layout:</p>
+<pre><code>docs/user/
+  zh-TW/{index.md, index.html}
+  en/{index.md, index.html}</code></pre>
+            <p>Each section starts with a doc-key marker (uppercase below is a placeholder; real keys are lowercase kebab-case):</p>
+<pre><code>&lt;!-- doc-key: SECTION-KEY --&gt;</code></pre>
+            <p>The validator lives in <code>scripts/check-user-docs.ts</code> and runs via <code>pnpm docs:check</code>. It checks:</p>
+            <ul>
+                <li>No duplicate doc-keys within a single file</li>
+                <li>Every file contains every key listed in <code>requiredDocKeys</code></li>
+                <li>Markdown and HTML doc-key order match within the same locale</li>
+            </ul>
+            <p>It does not enforce ordering between <code>zh-TW</code> and <code>en</code>, but by convention <strong>both locales should stay in sync</strong> — every new section should land in all four files at once.</p>
+            <p><strong>Adding a new section</strong>:</p>
+            <ol>
+                <li>Edit <code>scripts/check-user-docs.ts</code> and append the new key to <code>requiredDocKeys</code></li>
+                <li>Insert <code>&lt;!-- doc-key: NEW-KEY --&gt;</code> (real key: lowercase kebab) at the same position in all four files</li>
+                <li>Write the prose</li>
+                <li>Run <code>pnpm docs:check</code> and only commit when it passes</li>
+                <li>Land everything in a single commit</li>
+            </ol>
+            <p><strong>Roadmap</strong>: Stage B will fold the validator into a built-in <code>specbook docs validate</code> CLI; Stage A′ removes this <code>scripts/check-user-docs.ts</code> and the <code>docs:check</code> script. Once that lands, SpecBook fully dogfoods itself and the external bun dependency goes away.</p>
         </section>
 
         <footer class="mt-32 pb-20 text-center">

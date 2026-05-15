@@ -211,8 +211,37 @@ SpecBook 有三個視覺面向：
 完整設計規範請參考 repo 內 [`DESIGN.md`](https://github.com/carl-ee/specbook/blob/main/DESIGN.md)（PaperTech / Vector-inspired）；自訂主題目前 v1 不開放，v2 規劃 `specbook eject`。
 
 <!-- doc-key: documentation-maintenance -->
-## Documentation maintenance
+## 文件維護
 
-> How these docs stay aligned: the doc-key contract, multi-locale
-> policy, and `bun run docs:check`.
+這份使用者手冊用「雙格式 × 雙 locale」結構維持誠實：
+
+```
+docs/user/
+  zh-TW/{index.md, index.html}
+  en/{index.md, index.html}
+```
+
+每個區塊頭部都有一個 doc-key marker（範例用大寫；實際 key 須為 kebab-case 小寫）：
+
+```html
+<!-- doc-key: SECTION-KEY -->
+```
+
+驗證器是 `scripts/check-user-docs.ts`，由 `pnpm docs:check` 觸發。它檢查：
+
+- 同一檔案內無重複的 doc-key
+- 每份檔案都包含 `requiredDocKeys` 清單裡的全部 key
+- md 與 html 在同一 locale 內 doc-key 順序一致
+
+它不會檢查 zh-TW 與 en 之間的順序對齊，但**慣例上兩 locale 必須同步**：加任何新區塊都應一次更新四份檔案。
+
+**新增章節的工作流**：
+
+1. 編輯 `scripts/check-user-docs.ts` 把新 key 加入 `requiredDocKeys`
+2. 四份檔案各加一個 `<!-- doc-key: NEW-KEY -->` 區段（同位置；實際寫入時用 kebab-case 小寫）
+3. 寫 prose
+4. 跑 `pnpm docs:check`，pass 才提交
+5. 一次 commit 全部變更
+
+**未來 roadmap**：B 階段會把 validator 內化成 `specbook docs validate` CLI，A′ 階段會移除這份 `scripts/check-user-docs.ts` 與 `docs:check` script。屆時 dogfood 完成、外部 bun 依賴歸零。
 

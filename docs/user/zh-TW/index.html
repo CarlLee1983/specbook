@@ -238,10 +238,29 @@ cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook</code></pre
 
         <!-- doc-key: documentation-maintenance -->
         <section id="documentation-maintenance">
-            <h2>Documentation maintenance</h2>
-            <p>Replace this paragraph with the doc-key contract summary,
-            multi-locale policy, and <code>bun run docs:check</code>
-            instructions.</p>
+            <h2>文件維護</h2>
+            <p>這份使用者手冊用「雙格式 × 雙 locale」結構維持誠實：</p>
+<pre><code>docs/user/
+  zh-TW/{index.md, index.html}
+  en/{index.md, index.html}</code></pre>
+            <p>每個區塊頭部都有一個 doc-key marker（範例用大寫；實際 key 須為 kebab-case 小寫）：</p>
+<pre><code>&lt;!-- doc-key: SECTION-KEY --&gt;</code></pre>
+            <p>驗證器是 <code>scripts/check-user-docs.ts</code>，由 <code>pnpm docs:check</code> 觸發。它檢查：</p>
+            <ul>
+                <li>同一檔案內無重複的 doc-key</li>
+                <li>每份檔案都包含 <code>requiredDocKeys</code> 清單裡的全部 key</li>
+                <li>md 與 html 在同一 locale 內 doc-key 順序一致</li>
+            </ul>
+            <p>它不會檢查 zh-TW 與 en 之間的順序對齊，但<strong>慣例上兩 locale 必須同步</strong>：加任何新區塊都應一次更新四份檔案。</p>
+            <p><strong>新增章節的工作流</strong>：</p>
+            <ol>
+                <li>編輯 <code>scripts/check-user-docs.ts</code> 把新 key 加入 <code>requiredDocKeys</code></li>
+                <li>四份檔案各加一個 <code>&lt;!-- doc-key: NEW-KEY --&gt;</code> 區段（同位置；實際寫入時用 kebab-case 小寫）</li>
+                <li>寫 prose</li>
+                <li>跑 <code>pnpm docs:check</code>，pass 才提交</li>
+                <li>一次 commit 全部變更</li>
+            </ol>
+            <p><strong>未來 roadmap</strong>：B 階段會把 validator 內化成 <code>specbook docs validate</code> CLI，A′ 階段會移除這份 <code>scripts/check-user-docs.ts</code> 與 <code>docs:check</code> script。屆時 dogfood 完成、外部 bun 依賴歸零。</p>
         </section>
 
         <footer class="mt-32 pb-20 text-center">
