@@ -8,3 +8,9 @@ const outputStyles = resolve(repoRoot, 'dist/styles')
 
 await mkdir(outputStyles, { recursive: true })
 await cp(sourceStyles, outputStyles, { recursive: true })
+
+const sourceDocsTemplates = resolve(repoRoot, 'src/docs/templates')
+const outputDocsTemplates = resolve(repoRoot, 'dist/docs/templates')
+
+await mkdir(outputDocsTemplates, { recursive: true })
+await cp(sourceDocsTemplates, outputDocsTemplates, { recursive: true })
