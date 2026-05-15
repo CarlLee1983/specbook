@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpecBook | User documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --color-primary: #D97757;
+            --color-secondary: #635C55;
+            --color-background: #F9F5F1;
+            --color-surface: #FFFFFF;
+            --color-border: #E5E0DA;
+            --color-text-main: #2D2621;
+            --color-text-muted: #8C847D;
+            --font-sans: 'Inter', 'Outfit', sans-serif;
+            --font-display: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', 'Roboto Mono', monospace;
+        }
+        @layer base {
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                @apply bg-background text-text-main antialiased selection:bg-primary/10;
+                font-family: var(--font-sans);
+            }
+            h1, h2, h3 { font-family: var(--font-display); }
+            h1 { @apply text-5xl font-black tracking-tight mt-16 mb-8 text-text-main; }
+            h2 { @apply text-3xl font-bold tracking-tight mt-16 mb-8 flex items-center gap-3 text-text-main; }
+            h2::after { content: ""; @apply h-px flex-1 bg-border ml-4; }
+            h3 { @apply text-xl font-bold mt-12 mb-6 text-text-main; }
+            p { @apply mb-6 leading-relaxed text-text-muted text-[1.05rem]; }
+            ul { @apply list-none mb-8 space-y-3; }
+            li { @apply flex items-start gap-3 text-text-muted; }
+            li:not(.nav-item)::before { content: "→"; @apply text-primary font-bold mt-0.5; }
+            code { @apply bg-white px-1.5 py-0.5 rounded text-[0.85rem] font-mono text-primary border border-border; }
+            pre { @apply relative bg-[#332F2E] rounded-lg p-6 mb-8 overflow-x-auto border border-secondary/20 shadow-sm; }
+            pre code { @apply bg-transparent p-0 text-[#EDE8E4] text-[0.9rem] leading-relaxed border-none; }
+            table { @apply w-full border-collapse mb-10 text-sm text-left rounded-lg overflow-hidden border border-border bg-surface shadow-sm; }
+            th { @apply bg-background/50 px-6 py-4 font-bold text-text-main border-b border-border; }
+            td { @apply px-6 py-4 border-b border-border text-text-muted; }
+            tr:last-child td { @apply border-none; }
+            tr:hover td { @apply bg-background/30 transition-colors; }
+        }
+        .paper-card {
+            @apply bg-surface border border-border rounded-lg shadow-sm hover:shadow-md transition-all duration-300;
+        }
+        .nav-link {
+            @apply block py-2 px-4 rounded-md text-text-muted hover:text-primary transition-colors font-medium;
+        }
+        .nav-link.active {
+            @apply text-primary font-bold border-l-2 border-primary bg-primary/5 rounded-none;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <nav class="hidden lg:block w-80 h-screen sticky top-0 self-start bg-surface border-r border-border p-8 overflow-y-auto shrink-0 transition-all z-50">
+        <div class="flex items-center gap-3 mb-12">
+            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+                <span class="text-white font-black text-xl">S</span>
+            </div>
+            <span class="text-2xl font-black tracking-tight text-text-main">SpecBook</span>
+        </div>
+
+        <div class="space-y-8">
+            <section>
+                <ul class="list-none space-y-1 p-0 m-0">
+                    <li class="nav-item"><a href="#overview" class="nav-link">Overview</a></li>
+                    <li class="nav-item"><a href="#install-setup" class="nav-link">Install & setup</a></li>
+                    <li class="nav-item"><a href="#discovery-read" class="nav-link">Discovery / read</a></li>
+                    <li class="nav-item"><a href="#writes-mutations" class="nav-link">Writes / mutations</a></li>
+                    <li class="nav-item"><a href="#advanced-tools" class="nav-link">Advanced tools</a></li>
+                    <li class="nav-item"><a href="#diagnostics-recovery" class="nav-link">Diagnostics / recovery</a></li>
+                    <li class="nav-item"><a href="#ai-integration" class="nav-link">AI integration</a></li>
+                    <li class="nav-item"><a href="#visual-surfaces" class="nav-link">Visual surfaces</a></li>
+                    <li class="nav-item"><a href="#documentation-maintenance" class="nav-link">Documentation maintenance</a></li>
+                </ul>
+            </section>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 lg:p-16 max-w-5xl mx-auto">
+        <!-- doc-key: overview -->
+        <section id="overview" class="py-12">
+            <h1>SpecBook</h1>
+            <p class="text-xl font-medium text-text-muted max-w-3xl leading-relaxed">
+                把專案 spec 變成有節奏感的單頁站
+            </p>
+            <div class="flex gap-4 mt-8">
+                <a href="https://github.com/carl-ee/specbook" class="px-6 py-3 bg-surface border border-border rounded-md font-bold text-text-main hover:bg-background transition-all">GitHub</a>
+            </div>
+        </section>
+
+        <!-- doc-key: install-setup -->
+        <section id="install-setup">
+            <h2>Install &amp; setup</h2>
+            <p>Replace this paragraph with installation instructions.</p>
+        </section>
+
+        <!-- doc-key: discovery-read -->
+        <section id="discovery-read">
+            <h2>Discovery / read</h2>
+            <p>Replace this paragraph with read-only command docs.</p>
+        </section>
+
+        <!-- doc-key: writes-mutations -->
+        <section id="writes-mutations">
+            <h2>Writes / mutations</h2>
+            <p>Replace this paragraph with mutation command docs.</p>
+        </section>
+
+        <!-- doc-key: advanced-tools -->
+        <section id="advanced-tools">
+            <h2>Advanced tools</h2>
+            <p>Replace this paragraph with power-user docs.</p>
+        </section>
+
+        <!-- doc-key: diagnostics-recovery -->
+        <section id="diagnostics-recovery">
+            <h2>Diagnostics / recovery</h2>
+            <p>Replace this paragraph with diagnostic and recovery docs.</p>
+        </section>
+
+        <!-- doc-key: ai-integration -->
+        <section id="ai-integration">
+            <h2>AI-agent integration</h2>
+            <p>Replace this paragraph with the AI-agent integration story.</p>
+        </section>
+
+        <!-- doc-key: visual-surfaces -->
+        <section id="visual-surfaces">
+            <h2>Visual / dashboard surfaces</h2>
+            <p>Replace this paragraph with HTML / dashboard / report docs.</p>
+        </section>
+
+        <!-- doc-key: documentation-maintenance -->
+        <section id="documentation-maintenance">
+            <h2>Documentation maintenance</h2>
+            <p>Replace this paragraph with the doc-key contract summary,
+            multi-locale policy, and <code>bun run docs:check</code>
+            instructions.</p>
+        </section>
+
+        <footer class="mt-32 pb-20 text-center">
+            <div class="h-px w-24 bg-border mx-auto mb-8"></div>
+            <p class="text-text-muted text-sm font-medium">SpecBook documentation</p>
+        </footer>
+    </main>
+
+    <script>
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.5 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    document.querySelectorAll('.nav-item a').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('section[id]').forEach((section) => observer.observe(section));
+    </script>
+</body>
+</html>

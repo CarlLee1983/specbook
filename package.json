@@ -4,7 +4,15 @@
   "description": "Static site generator for software project specifications.",
   "type": "module",
   "license": "MIT",
-  "keywords": ["static-site-generator", "specification", "spec", "documentation", "react", "vite", "tailwind"],
+  "keywords": [
+    "static-site-generator",
+    "specification",
+    "spec",
+    "documentation",
+    "react",
+    "vite",
+    "tailwind"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/carl-ee/specbook"
@@ -37,7 +45,8 @@
     "test:watch": "vitest",
     "test:packaging": "pnpm build && vitest run tests/packaging/package-smoke.test.ts",
     "prepublishOnly": "pnpm test && pnpm test:packaging",
-    "pack:check": "npm pack --dry-run"
+    "pack:check": "npm pack --dry-run",
+    "docs:check": "bun run scripts/check-user-docs.ts"
   },
   "engines": {
     "node": ">=20"
