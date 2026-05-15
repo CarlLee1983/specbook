@@ -130,8 +130,19 @@ npx specbook gaps --json</code></pre>
 
         <!-- doc-key: writes-mutations -->
         <section id="writes-mutations">
-            <h2>Writes / mutations</h2>
-            <p>Replace this paragraph with mutation command docs.</p>
+            <h2>寫入與產出</h2>
+            <p>三個會落地檔案的命令。</p>
+            <p><code>specbook init</code> scaffold <code>.specbook/</code>，預設冪等，不覆寫既有檔案。需要重新洗牌時加 <code>--force</code>；只想處理特定章節時用 <code>--only</code>：</p>
+<pre><code>npx specbook init --force
+npx specbook init --only overview,tech-stack</code></pre>
+            <p><code>specbook build</code> 產出可部署的靜態站到 <code>.specbook/dist/</code>，含 <code>index.html</code>、<code>sitemap.xml</code>、assets：</p>
+<pre><code>npx specbook build</code></pre>
+            <p>build 會跑 vite 完整 production build，並 SSR 預渲染 <code>index.html</code>。完成後印 <code>Built to &lt;outDir&gt;</code>。</p>
+            <p><code>specbook export</code> 輸出客戶交付用的系統規格書到 <code>.specbook/dist/client-spec/</code>（可用 <code>-o</code> 改路徑）：</p>
+<pre><code>npx specbook export
+npx specbook export --formats md
+npx specbook export -o build/spec</code></pre>
+            <p>預設輸出 <code>system-spec.md</code> + <code>system-spec.html</code> 兩種格式；用 <code>--formats</code> 限制。HTML 版會帶 <code>theme.locale</code> 標記 <code>&lt;html lang="..."&gt;</code>，可依設定產 zh-TW 或 en 版本。</p>
         </section>
 
         <!-- doc-key: advanced-tools -->

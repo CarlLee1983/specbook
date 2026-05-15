@@ -65,8 +65,32 @@ npx specbook gaps --json
 <!-- doc-key: writes-mutations -->
 ## Writes / mutations
 
-> Commands that change state, plus safety mechanisms (`--dry-run`,
-> previews, confirmations).
+Three commands write files to disk.
+
+`specbook init` scaffolds `.specbook/`. It is idempotent by default and will not overwrite existing files. Use `--force` to re-scaffold; use `--only` to limit the operation to specific chapters:
+
+```bash
+npx specbook init --force
+npx specbook init --only overview,tech-stack
+```
+
+`specbook build` produces a deployable static site under `.specbook/dist/`, with `index.html`, `sitemap.xml`, and assets:
+
+```bash
+npx specbook build
+```
+
+`build` runs a full Vite production build and SSR-prerenders `index.html`. It prints `Built to <outDir>` when finished.
+
+`specbook export` writes a client-facing system specification document under `.specbook/dist/client-spec/` (override with `-o`):
+
+```bash
+npx specbook export
+npx specbook export --formats md
+npx specbook export -o build/spec
+```
+
+The default output is both `system-spec.md` and `system-spec.html`; restrict with `--formats`. The HTML version stamps `<html lang="...">` from `theme.locale`, so the same content yields a `zh-TW` or `en` document depending on config.
 
 <!-- doc-key: advanced-tools -->
 ## Advanced tools

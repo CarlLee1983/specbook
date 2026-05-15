@@ -63,10 +63,34 @@ npx specbook gaps --json
 `gaps` 永遠 exit 0（缺口屬資訊性，不算錯誤）；若 `.specbook` 目錄不存在則 exit 2。配合 `validate` 一起用：先 `validate` 守 schema、再 `gaps` 找下一個該補的章節。
 
 <!-- doc-key: writes-mutations -->
-## Writes / mutations
+## 寫入與產出
 
-> Commands that change state, plus safety mechanisms (`--dry-run`,
-> previews, confirmations).
+三個會落地檔案的命令。
+
+`specbook init` scaffold `.specbook/`，預設冪等，不覆寫既有檔案。需要重新洗牌時加 `--force`；只想處理特定章節時用 `--only`：
+
+```bash
+npx specbook init --force
+npx specbook init --only overview,tech-stack
+```
+
+`specbook build` 產出可部署的靜態站到 `.specbook/dist/`，含 `index.html`、`sitemap.xml`、assets：
+
+```bash
+npx specbook build
+```
+
+build 會跑 vite 完整 production build，並 SSR 預渲染 `index.html`。完成後印 `Built to <outDir>`。
+
+`specbook export` 輸出客戶交付用的系統規格書到 `.specbook/dist/client-spec/`（可用 `-o` 改路徑）：
+
+```bash
+npx specbook export
+npx specbook export --formats md
+npx specbook export -o build/spec
+```
+
+預設輸出 `system-spec.md` + `system-spec.html` 兩種格式；用 `--formats` 限制。HTML 版會帶 `theme.locale` 標記 `<html lang="...">`，可依設定產 zh-TW 或 en 版本。
 
 <!-- doc-key: advanced-tools -->
 ## Advanced tools

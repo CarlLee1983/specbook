@@ -131,7 +131,18 @@ npx specbook gaps --json</code></pre>
         <!-- doc-key: writes-mutations -->
         <section id="writes-mutations">
             <h2>Writes / mutations</h2>
-            <p>Replace this paragraph with mutation command docs.</p>
+            <p>Three commands write files to disk.</p>
+            <p><code>specbook init</code> scaffolds <code>.specbook/</code>. It is idempotent by default and will not overwrite existing files. Use <code>--force</code> to re-scaffold; use <code>--only</code> to limit the operation to specific chapters:</p>
+<pre><code>npx specbook init --force
+npx specbook init --only overview,tech-stack</code></pre>
+            <p><code>specbook build</code> produces a deployable static site under <code>.specbook/dist/</code>, with <code>index.html</code>, <code>sitemap.xml</code>, and assets:</p>
+<pre><code>npx specbook build</code></pre>
+            <p><code>build</code> runs a full Vite production build and SSR-prerenders <code>index.html</code>. It prints <code>Built to &lt;outDir&gt;</code> when finished.</p>
+            <p><code>specbook export</code> writes a client-facing system specification document under <code>.specbook/dist/client-spec/</code> (override with <code>-o</code>):</p>
+<pre><code>npx specbook export
+npx specbook export --formats md
+npx specbook export -o build/spec</code></pre>
+            <p>The default output is both <code>system-spec.md</code> and <code>system-spec.html</code>; restrict with <code>--formats</code>. The HTML version stamps <code>&lt;html lang="..."&gt;</code> from <code>theme.locale</code>, so the same content yields a <code>zh-TW</code> or <code>en</code> document depending on config.</p>
         </section>
 
         <!-- doc-key: advanced-tools -->
