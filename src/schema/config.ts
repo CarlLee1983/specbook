@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { DocsSchema } from './docs.js'
 
 export const DocumentMetadataSchema = z
   .object({
@@ -49,6 +50,7 @@ export const SpecBookConfigSchema = z.object({
       hide: z.array(SectionNameSchema).default([]),
     })
     .prefault({}),
+  docs: DocsSchema.optional(),
 })
 
 export type SpecBookConfig = z.infer<typeof SpecBookConfigSchema>
