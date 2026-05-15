@@ -11,7 +11,36 @@
 <!-- doc-key: install-setup -->
 ## Install & setup
 
-> How to install and run SpecBook for the first time.
+SpecBook is published on npm. It requires **Node.js 20 or newer** plus pnpm (or npm/yarn). Check your toolchain first:
+
+```bash
+node --version   # v20.x or newer
+pnpm --version   # any recent version
+```
+
+Install SpecBook as a dev dependency in the target project:
+
+```bash
+pnpm add -D specbook
+```
+
+Run the initializer. SpecBook detects your `package.json`, writes `.specbook/specbook.config.ts`, and scaffolds the five chapter placeholders (Overview, Tech Stack, Architecture, User Stories, Roadmap):
+
+```bash
+npx specbook init
+```
+
+`init` is idempotent — re-running it does not overwrite existing files. Pass `--force` if you need to re-scaffold from scratch.
+
+Start the local dev server to preview:
+
+```bash
+npx specbook dev
+```
+
+Open `http://localhost:5173` to see the first render. Any edit under `.specbook/content/` triggers hot reload in the browser.
+
+> Mermaid is opt-in: if `architecture.md` contains a ` ```mermaid` block, install the optional `playwright` peer dep (`pnpm add -D playwright`). Skip it if you have no diagrams.
 
 <!-- doc-key: discovery-read -->
 ## Discovery / read

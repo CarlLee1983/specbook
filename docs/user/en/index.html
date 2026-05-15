@@ -102,7 +102,18 @@
         <!-- doc-key: install-setup -->
         <section id="install-setup">
             <h2>Install &amp; setup</h2>
-            <p>Replace this paragraph with installation instructions.</p>
+            <p>SpecBook is published on npm. It requires <strong>Node.js 20 or newer</strong> plus pnpm (or npm/yarn). Check your toolchain first:</p>
+<pre><code>node --version   # v20.x or newer
+pnpm --version   # any recent version</code></pre>
+            <p>Install SpecBook as a dev dependency in the target project:</p>
+<pre><code>pnpm add -D specbook</code></pre>
+            <p>Run the initializer. SpecBook detects your <code>package.json</code>, writes <code>.specbook/specbook.config.ts</code>, and scaffolds the five chapter placeholders (Overview, Tech Stack, Architecture, User Stories, Roadmap):</p>
+<pre><code>npx specbook init</code></pre>
+            <p><code>init</code> is idempotent — re-running it does not overwrite existing files. Pass <code>--force</code> if you need to re-scaffold from scratch.</p>
+            <p>Start the local dev server to preview:</p>
+<pre><code>npx specbook dev</code></pre>
+            <p>Open <code>http://localhost:5173</code> to see the first render. Any edit under <code>.specbook/content/</code> triggers hot reload in the browser.</p>
+            <p class="text-sm">Mermaid is opt-in: if <code>architecture.md</code> contains a <code>```mermaid</code> block, install the optional <code>playwright</code> peer dep (<code>pnpm add -D playwright</code>). Skip it if you have no diagrams.</p>
         </section>
 
         <!-- doc-key: discovery-read -->
