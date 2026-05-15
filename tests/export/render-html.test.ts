@@ -48,4 +48,25 @@ describe('renderDocumentHtml', () => {
     expect(html).toContain('class="flow-action">開啟 App</p>')
     expect(html).toContain('class="flow-outcome">立即顯示離線可見內容</p>')
   })
+
+  it('renders flow steps without optional actors', async () => {
+    const data = await loadAll(resolve(__dirname, '../fixtures/taskflow'))
+    const html = renderDocumentHtml({
+      ...data,
+      architecture: {
+        ...data.architecture,
+        flows: [
+          {
+            name: '免登入瀏覽',
+            steps: [{ action: '訪客開啟公開規格頁' }],
+          },
+        ],
+      },
+    })
+
+    expect(html).toContain('<article class="flow">')
+    expect(html).toContain('免登入瀏覽')
+    expect(html).toContain('class="flow-action">訪客開啟公開規格頁</p>')
+    expect(html).not.toContain('class="flow-actor"')
+  })
 })

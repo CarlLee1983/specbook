@@ -239,9 +239,12 @@ function renderFlows(flows: Flow[]): string {
           const outcome = step.outcome
             ? `<p class="flow-outcome">${escapeHtml(step.outcome)}</p>`
             : ''
+          const actor = step.actor
+            ? `<span class="flow-actor">${escapeHtml(step.actor)}</span>`
+            : ''
           return `<li>
             <div>
-              <span class="flow-actor">${escapeHtml(step.actor)}</span>
+              ${actor}
               <p class="flow-action">${escapeHtml(step.action)}</p>
               ${outcome}
             </div>
