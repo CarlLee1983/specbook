@@ -162,10 +162,34 @@ npx specbook init --force
 仍有問題？開 issue：[github.com/carl-ee/specbook/issues](https://github.com/carl-ee/specbook/issues)。請附 `validate` / `gaps` 完整輸出、`.specbook/specbook.config.ts`，與 `node --version`。
 
 <!-- doc-key: ai-integration -->
-## AI-agent integration
+## AI agent 整合
 
-> How an LLM agent should use SpecBook: structured errors, skill
-> packs, safe defaults, dry-run gates.
+SpecBook 的內容格式對 LLM 非常友善：
+
+- `.specbook/content/*.md`：標準 markdown + YAML frontmatter
+- `.specbook/content/*.yaml`：純 yaml，結構由 zod schema 鎖死
+- `.specbook/specbook.config.ts`：明確型別的 TypeScript 設定
+
+任何 AI agent 都能讀寫這些檔案，不需要額外 parser。建議工作流：
+
+1. `npx specbook validate` — 確認當前 schema 通過
+2. `npx specbook gaps --json` — 取得結構化的缺口清單
+3. 對 `.specbook/content/<file>` 寫入修改
+4. `npx specbook validate` — 確認改完仍合 schema
+
+加 `--json` 讓 gaps 輸出 JSON，方便 agent parse。
+
+**Claude Code 使用者**：SpecBook 在 npm package 內附一個 Claude Code Skill (`node_modules/specbook/skill/specbook`)。複製到 `~/.claude/skills/specbook/` 後即可使用：
+
+```bash
+mkdir -p ~/.claude/skills
+cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook
+```
+
+- `/specbook init` — 一次性 scaffold + LLM 草稿 overview / architecture
+- `/specbook enhance` — 互動式 Q&A 補完 user-stories / roadmap
+
+skill 內附 `reference/schema-cheatsheet.md`，agent 寫入前可先讀，降低 schema 違規率。也可搭配 `superpowers` 等其他 skill 組合 brainstorm → execute → validate 的循環。
 
 <!-- doc-key: visual-surfaces -->
 ## Visual / dashboard surfaces

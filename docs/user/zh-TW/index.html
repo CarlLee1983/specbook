@@ -195,8 +195,29 @@ npx specbook init --force</code></pre>
 
         <!-- doc-key: ai-integration -->
         <section id="ai-integration">
-            <h2>AI-agent integration</h2>
-            <p>Replace this paragraph with the AI-agent integration story.</p>
+            <h2>AI agent 整合</h2>
+            <p>SpecBook 的內容格式對 LLM 非常友善：</p>
+            <ul>
+                <li><code>.specbook/content/*.md</code>：標準 markdown + YAML frontmatter</li>
+                <li><code>.specbook/content/*.yaml</code>：純 yaml，結構由 zod schema 鎖死</li>
+                <li><code>.specbook/specbook.config.ts</code>：明確型別的 TypeScript 設定</li>
+            </ul>
+            <p>任何 AI agent 都能讀寫這些檔案，不需要額外 parser。建議工作流：</p>
+            <ol>
+                <li><code>npx specbook validate</code> — 確認當前 schema 通過</li>
+                <li><code>npx specbook gaps --json</code> — 取得結構化的缺口清單</li>
+                <li>對 <code>.specbook/content/&lt;file&gt;</code> 寫入修改</li>
+                <li><code>npx specbook validate</code> — 確認改完仍合 schema</li>
+            </ol>
+            <p>加 <code>--json</code> 讓 gaps 輸出 JSON，方便 agent parse。</p>
+            <p><strong>Claude Code 使用者</strong>：SpecBook 在 npm package 內附一個 Claude Code Skill (<code>node_modules/specbook/skill/specbook</code>)。複製到 <code>~/.claude/skills/specbook/</code> 後即可使用：</p>
+<pre><code>mkdir -p ~/.claude/skills
+cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook</code></pre>
+            <ul>
+                <li><code>/specbook init</code> — 一次性 scaffold + LLM 草稿 overview / architecture</li>
+                <li><code>/specbook enhance</code> — 互動式 Q&amp;A 補完 user-stories / roadmap</li>
+            </ul>
+            <p>skill 內附 <code>reference/schema-cheatsheet.md</code>，agent 寫入前可先讀，降低 schema 違規率。也可搭配 <code>superpowers</code> 等其他 skill 組合 brainstorm → execute → validate 的循環。</p>
         </section>
 
         <!-- doc-key: visual-surfaces -->

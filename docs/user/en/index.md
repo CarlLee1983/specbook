@@ -164,8 +164,32 @@ Still stuck? File an issue: [github.com/carl-ee/specbook/issues](https://github.
 <!-- doc-key: ai-integration -->
 ## AI-agent integration
 
-> How an LLM agent should use SpecBook: structured errors, skill
-> packs, safe defaults, dry-run gates.
+SpecBook's content format is LLM-friendly by design:
+
+- `.specbook/content/*.md`: standard Markdown with YAML frontmatter
+- `.specbook/content/*.yaml`: plain YAML, locked by zod schemas
+- `.specbook/specbook.config.ts`: typed TypeScript configuration
+
+Any AI agent can read and write these files without extra parsing. Recommended loop:
+
+1. `npx specbook validate` — confirm the current schemas pass
+2. `npx specbook gaps --json` — get a structured list of gaps
+3. Edit the relevant file under `.specbook/content/`
+4. `npx specbook validate` — confirm the edit still validates
+
+Pass `--json` to `gaps` for machine-readable output that an agent can parse directly.
+
+**For Claude Code users**: SpecBook ships a Claude Code skill inside the npm package at `node_modules/specbook/skill/specbook`. Copy it into `~/.claude/skills/specbook/`:
+
+```bash
+mkdir -p ~/.claude/skills
+cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook
+```
+
+- `/specbook init` — one-shot scaffold plus LLM-drafted overview and architecture
+- `/specbook enhance` — interactive Q&A to fill in user-stories and roadmap
+
+The skill ships `reference/schema-cheatsheet.md`, which the agent should read before writing to reduce schema violations. Compose it with other skills (`superpowers`, etc.) for a brainstorm → execute → validate loop.
 
 <!-- doc-key: visual-surfaces -->
 ## Visual / dashboard surfaces

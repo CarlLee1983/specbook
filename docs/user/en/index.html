@@ -196,7 +196,28 @@ npx specbook init --force</code></pre>
         <!-- doc-key: ai-integration -->
         <section id="ai-integration">
             <h2>AI-agent integration</h2>
-            <p>Replace this paragraph with the AI-agent integration story.</p>
+            <p>SpecBook's content format is LLM-friendly by design:</p>
+            <ul>
+                <li><code>.specbook/content/*.md</code>: standard Markdown with YAML frontmatter</li>
+                <li><code>.specbook/content/*.yaml</code>: plain YAML, locked by zod schemas</li>
+                <li><code>.specbook/specbook.config.ts</code>: typed TypeScript configuration</li>
+            </ul>
+            <p>Any AI agent can read and write these files without extra parsing. Recommended loop:</p>
+            <ol>
+                <li><code>npx specbook validate</code> — confirm the current schemas pass</li>
+                <li><code>npx specbook gaps --json</code> — get a structured list of gaps</li>
+                <li>Edit the relevant file under <code>.specbook/content/</code></li>
+                <li><code>npx specbook validate</code> — confirm the edit still validates</li>
+            </ol>
+            <p>Pass <code>--json</code> to <code>gaps</code> for machine-readable output that an agent can parse directly.</p>
+            <p><strong>For Claude Code users</strong>: SpecBook ships a Claude Code skill inside the npm package at <code>node_modules/specbook/skill/specbook</code>. Copy it into <code>~/.claude/skills/specbook/</code>:</p>
+<pre><code>mkdir -p ~/.claude/skills
+cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook</code></pre>
+            <ul>
+                <li><code>/specbook init</code> — one-shot scaffold plus LLM-drafted overview and architecture</li>
+                <li><code>/specbook enhance</code> — interactive Q&amp;A to fill in user-stories and roadmap</li>
+            </ul>
+            <p>The skill ships <code>reference/schema-cheatsheet.md</code>, which the agent should read before writing to reduce schema violations. Compose it with other skills (<code>superpowers</code>, etc.) for a brainstorm → execute → validate loop.</p>
         </section>
 
         <!-- doc-key: visual-surfaces -->
