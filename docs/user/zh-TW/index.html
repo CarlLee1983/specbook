@@ -118,8 +118,14 @@ pnpm --version   # 任何近期版本皆可</code></pre>
 
         <!-- doc-key: discovery-read -->
         <section id="discovery-read">
-            <h2>Discovery / read</h2>
-            <p>Replace this paragraph with read-only command docs.</p>
+            <h2>檢查與探索</h2>
+            <p>兩個只讀命令幫你在不變更狀態的前提下盤點現況。</p>
+            <p><code>specbook validate</code> 對 <code>.specbook/content/</code> 跑 zod schema 驗證。成功時印 <code>All content valid.</code> 並 exit 0；失敗時逐行印錯誤並 exit 1，適合直接接到 CI：</p>
+<pre><code>npx specbook validate</code></pre>
+            <p><code>specbook gaps</code> 偵測 placeholder、殘留模板、缺值欄位等需要補完的章節。預設輸出人類可讀清單，加 <code>--json</code> 給 LLM / 自動化流程使用：</p>
+<pre><code>npx specbook gaps
+npx specbook gaps --json</code></pre>
+            <p><code>gaps</code> 永遠 exit 0（缺口屬資訊性，不算錯誤）；若 <code>.specbook</code> 目錄不存在則 exit 2。配合 <code>validate</code> 一起用：先 <code>validate</code> 守 schema、再 <code>gaps</code> 找下一個該補的章節。</p>
         </section>
 
         <!-- doc-key: writes-mutations -->

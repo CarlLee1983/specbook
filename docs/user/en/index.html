@@ -119,7 +119,13 @@ pnpm --version   # any recent version</code></pre>
         <!-- doc-key: discovery-read -->
         <section id="discovery-read">
             <h2>Discovery / read</h2>
-            <p>Replace this paragraph with read-only command docs.</p>
+            <p>Two read-only commands let you inspect state without changing anything.</p>
+            <p><code>specbook validate</code> runs the zod schemas across <code>.specbook/content/</code>. It prints <code>All content valid.</code> and exits 0 on success; on failure it prints each error and exits 1, so you can wire it directly into CI:</p>
+<pre><code>npx specbook validate</code></pre>
+            <p><code>specbook gaps</code> detects placeholders, leftover templates, and missing fields you still need to fill in. It prints a human-readable list by default; pass <code>--json</code> for LLM or automation consumers:</p>
+<pre><code>npx specbook gaps
+npx specbook gaps --json</code></pre>
+            <p><code>gaps</code> always exits 0 (gaps are informational, not errors); it exits 2 only if <code>.specbook</code> is missing. Pair the two: <code>validate</code> enforces the schema, <code>gaps</code> tells you which chapter to write next.</p>
         </section>
 
         <!-- doc-key: writes-mutations -->

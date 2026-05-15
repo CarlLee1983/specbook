@@ -43,9 +43,24 @@ npx specbook dev
 > Mermaid 圖選用：若 `architecture.md` 含 ` ```mermaid` 區塊，請另外裝 `playwright` peer dep（`pnpm add -D playwright`）。沒有圖時可省略。
 
 <!-- doc-key: discovery-read -->
-## Discovery / read
+## 檢查與探索
 
-> Read-only / inspection commands. Listing, describing, exploring.
+兩個只讀命令幫你在不變更狀態的前提下盤點現況。
+
+`specbook validate` 對 `.specbook/content/` 跑 zod schema 驗證。成功時印 `All content valid.` 並 exit 0；失敗時逐行印錯誤並 exit 1，適合直接接到 CI：
+
+```bash
+npx specbook validate
+```
+
+`specbook gaps` 偵測 placeholder、殘留模板、缺值欄位等需要補完的章節。預設輸出人類可讀清單，加 `--json` 給 LLM / 自動化流程使用：
+
+```bash
+npx specbook gaps
+npx specbook gaps --json
+```
+
+`gaps` 永遠 exit 0（缺口屬資訊性，不算錯誤）；若 `.specbook` 目錄不存在則 exit 2。配合 `validate` 一起用：先 `validate` 守 schema、再 `gaps` 找下一個該補的章節。
 
 <!-- doc-key: writes-mutations -->
 ## Writes / mutations

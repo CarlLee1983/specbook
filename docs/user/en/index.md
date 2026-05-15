@@ -45,7 +45,22 @@ Open `http://localhost:5173` to see the first render. Any edit under `.specbook/
 <!-- doc-key: discovery-read -->
 ## Discovery / read
 
-> Read-only / inspection commands. Listing, describing, exploring.
+Two read-only commands let you inspect state without changing anything.
+
+`specbook validate` runs the zod schemas across `.specbook/content/`. It prints `All content valid.` and exits 0 on success; on failure it prints each error and exits 1, so you can wire it directly into CI:
+
+```bash
+npx specbook validate
+```
+
+`specbook gaps` detects placeholders, leftover templates, and missing fields you still need to fill in. It prints a human-readable list by default; pass `--json` for LLM or automation consumers:
+
+```bash
+npx specbook gaps
+npx specbook gaps --json
+```
+
+`gaps` always exits 0 (gaps are informational, not errors); it exits 2 only if `.specbook` is missing. Pair the two: `validate` enforces the schema, `gaps` tells you which chapter to write next.
 
 <!-- doc-key: writes-mutations -->
 ## Writes / mutations
