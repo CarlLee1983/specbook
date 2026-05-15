@@ -147,8 +147,31 @@ npx specbook export -o build/spec</code></pre>
 
         <!-- doc-key: advanced-tools -->
         <section id="advanced-tools">
-            <h2>Advanced tools</h2>
-            <p>Replace this paragraph with power-user docs.</p>
+            <h2>進階用法</h2>
+            <p><code>.specbook/specbook.config.ts</code> 控制專案層級設定，皆由 zod schema 驗證。常用的調整點：</p>
+<pre><code>import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: { name: 'TaskFlow', description: '專案描述', url: 'https://example.com' },
+  theme: { accent: '#D97757', locale: 'zh-TW', mode: 'light' },
+  document: { title: '系統規格書', version: 'v1.0', audience: 'Client' },
+  sections: {
+    order: ['overview', 'tech-stack', 'architecture', 'user-stories', 'roadmap'],
+    hide: [],
+  },
+})</code></pre>
+            <ul>
+                <li><code>theme.locale</code>：切 <code>zh-TW</code> 或 <code>en</code>，內建字串對照</li>
+                <li><code>theme.accent</code>：必須是 6 位 hex</li>
+                <li><code>sections.hide</code>：在站台與 export 都會生效</li>
+                <li><code>document.title</code>：影響 export 系統規格書的封面標題</li>
+            </ul>
+            <p>部署到 GitHub Pages 子路徑時，用 <code>--base</code> 旗標把資源路徑前綴起來：</p>
+<pre><code>npx specbook build --base /my-repo/</code></pre>
+            <p><code>export</code> 也支援自訂格式與目錄：</p>
+<pre><code>npx specbook export --formats md,html -o build/spec
+npx specbook export --formats md      # 只輸出 markdown</code></pre>
+            <p>兩 locale 對應的內建字串放在 npm package 內的 <code>i18n/{zh-TW,en}.ts</code>；v1 不支援逐字串覆寫，需要時可開 issue 討論。</p>
         </section>
 
         <!-- doc-key: diagnostics-recovery -->

@@ -148,7 +148,30 @@ npx specbook export -o build/spec</code></pre>
         <!-- doc-key: advanced-tools -->
         <section id="advanced-tools">
             <h2>Advanced tools</h2>
-            <p>Replace this paragraph with power-user docs.</p>
+            <p><code>.specbook/specbook.config.ts</code> controls project-level settings and is validated by zod. Common knobs:</p>
+<pre><code>import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: { name: 'TaskFlow', description: 'Project description', url: 'https://example.com' },
+  theme: { accent: '#D97757', locale: 'zh-TW', mode: 'light' },
+  document: { title: 'System Specification', version: 'v1.0', audience: 'Client' },
+  sections: {
+    order: ['overview', 'tech-stack', 'architecture', 'user-stories', 'roadmap'],
+    hide: [],
+  },
+})</code></pre>
+            <ul>
+                <li><code>theme.locale</code>: switches between <code>zh-TW</code> and <code>en</code> with built-in string tables</li>
+                <li><code>theme.accent</code>: must be a 6-digit hex color</li>
+                <li><code>sections.hide</code>: applies to both the site and <code>export</code></li>
+                <li><code>document.title</code>: drives the cover title of the exported spec</li>
+            </ul>
+            <p>Deploying to a GitHub Pages subpath? Use <code>--base</code> to prefix asset URLs:</p>
+<pre><code>npx specbook build --base /my-repo/</code></pre>
+            <p><code>export</code> also accepts custom formats and output paths:</p>
+<pre><code>npx specbook export --formats md,html -o build/spec
+npx specbook export --formats md      # markdown only</code></pre>
+            <p>The built-in i18n strings live in <code>i18n/{zh-TW,en}.ts</code> inside the npm package. v1 does not yet support per-string overrides — open an issue if you need it.</p>
         </section>
 
         <!-- doc-key: diagnostics-recovery -->

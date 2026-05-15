@@ -95,7 +95,41 @@ The default output is both `system-spec.md` and `system-spec.html`; restrict wit
 <!-- doc-key: advanced-tools -->
 ## Advanced tools
 
-> Power-user commands. REPL, scripting, plugins, code generation.
+`.specbook/specbook.config.ts` controls project-level settings and is validated by zod. Common knobs:
+
+```ts
+import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: { name: 'TaskFlow', description: 'Project description', url: 'https://example.com' },
+  theme: { accent: '#D97757', locale: 'zh-TW', mode: 'light' },
+  document: { title: 'System Specification', version: 'v1.0', audience: 'Client' },
+  sections: {
+    order: ['overview', 'tech-stack', 'architecture', 'user-stories', 'roadmap'],
+    hide: [],
+  },
+})
+```
+
+- `theme.locale`: switches between `zh-TW` and `en` with built-in string tables
+- `theme.accent`: must be a 6-digit hex color
+- `sections.hide`: applies to both the site and `export`
+- `document.title`: drives the cover title of the exported spec
+
+Deploying to a GitHub Pages subpath? Use `--base` to prefix asset URLs:
+
+```bash
+npx specbook build --base /my-repo/
+```
+
+`export` also accepts custom formats and output paths:
+
+```bash
+npx specbook export --formats md,html -o build/spec
+npx specbook export --formats md      # markdown only
+```
+
+The built-in i18n strings live in `i18n/{zh-TW,en}.ts` inside the npm package. v1 does not yet support per-string overrides — open an issue if you need it.
 
 <!-- doc-key: diagnostics-recovery -->
 ## Diagnostics / recovery

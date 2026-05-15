@@ -93,9 +93,43 @@ npx specbook export -o build/spec
 預設輸出 `system-spec.md` + `system-spec.html` 兩種格式；用 `--formats` 限制。HTML 版會帶 `theme.locale` 標記 `<html lang="...">`，可依設定產 zh-TW 或 en 版本。
 
 <!-- doc-key: advanced-tools -->
-## Advanced tools
+## 進階用法
 
-> Power-user commands. REPL, scripting, plugins, code generation.
+`.specbook/specbook.config.ts` 控制專案層級設定，皆由 zod schema 驗證。常用的調整點：
+
+```ts
+import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: { name: 'TaskFlow', description: '專案描述', url: 'https://example.com' },
+  theme: { accent: '#D97757', locale: 'zh-TW', mode: 'light' },
+  document: { title: '系統規格書', version: 'v1.0', audience: 'Client' },
+  sections: {
+    order: ['overview', 'tech-stack', 'architecture', 'user-stories', 'roadmap'],
+    hide: [],
+  },
+})
+```
+
+- `theme.locale`：切 `zh-TW` 或 `en`，內建字串對照
+- `theme.accent`：必須是 6 位 hex
+- `sections.hide`：在站台與 export 都會生效
+- `document.title`：影響 export 系統規格書的封面標題
+
+部署到 GitHub Pages 子路徑時，用 `--base` 旗標把資源路徑前綴起來：
+
+```bash
+npx specbook build --base /my-repo/
+```
+
+`export` 也支援自訂格式與目錄：
+
+```bash
+npx specbook export --formats md,html -o build/spec
+npx specbook export --formats md      # 只輸出 markdown
+```
+
+兩 locale 對應的內建字串放在 npm package 內的 `i18n/{zh-TW,en}.ts`；v1 不支援逐字串覆寫，需要時可開 issue 討論。
 
 <!-- doc-key: diagnostics-recovery -->
 ## Diagnostics / recovery
