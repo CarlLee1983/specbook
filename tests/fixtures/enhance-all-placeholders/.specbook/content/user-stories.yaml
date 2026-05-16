@@ -1,0 +1,12 @@
+- as: 主要使用者角色
+  want: 想做什麼
+  soThat: 達成什麼成果
+  priority: p0
+- as: 次要使用者
+  want: 想做什麼
+  soThat: 達成什麼
+  priority: p1
+- as: 第三類使用者
+  want: 想做什麼
+  soThat: 達成什麼
+  priority: p2

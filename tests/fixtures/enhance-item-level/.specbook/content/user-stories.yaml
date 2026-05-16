@@ -1,0 +1,8 @@
+- as: Engineer
+  want: Write fast code
+  soThat: 達成什麼成果
+  priority: p0
+- as: Designer
+  want: Create mockups
+  soThat: Validate the design with users
+  priority: p1

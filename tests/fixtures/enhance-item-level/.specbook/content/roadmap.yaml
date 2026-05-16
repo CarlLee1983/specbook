@@ -1,0 +1,9 @@
+- title: M1 — Local MVP
+  quarter: 2026 Q1
+  status: done
+  items:
+    - Implement core feature
+- title: M2 — Cloud
+  quarter: 2026 Q2
+  status: active
+  items: []
