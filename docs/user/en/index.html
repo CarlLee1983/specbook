@@ -125,10 +125,11 @@ pnpm --version   # any recent version</code></pre>
             <p>Two read-only commands let you inspect state without changing anything.</p>
             <p><code>specbook validate</code> runs the zod schemas across <code>.specbook/content/</code>. It prints <code>All content valid.</code> and exits 0 on success; on failure it prints each error and exits 1, so you can wire it directly into CI:</p>
 <pre><code>npx specbook validate</code></pre>
-            <p><code>specbook gaps</code> detects placeholders, leftover templates, and missing fields you still need to fill in. It prints a human-readable list by default; pass <code>--json</code> for LLM or automation consumers:</p>
-<pre><code>npx specbook gaps
-npx specbook gaps --json</code></pre>
-            <p><code>gaps</code> always exits 0 (gaps are informational, not errors); it exits 2 only if <code>.specbook</code> is missing. Pair the two: <code>validate</code> enforces the schema, <code>gaps</code> tells you which chapter to write next.</p>
+            <p><code>specbook enhance</code> detects leftover placeholders and missing fields you still need to fill in. It prints a human-readable list by default; pass <code>--json</code> for LLM or automation consumers:</p>
+<pre><code>npx specbook enhance
+npx specbook enhance --json</code></pre>
+            <p><code>enhance</code> always exits 0 (pending items are informational, not errors); it exits 2 only if <code>.specbook</code> is missing. Each JSON item carries a <code>prompt</code> field — an English instruction that an AI agent can execute directly.</p>
+            <blockquote><p><code>specbook gaps</code> is still available but deprecated; new projects should use <code>specbook enhance</code>.</p></blockquote>
         </section>
 
         <!-- doc-key: writes-mutations -->
@@ -191,8 +192,8 @@ npx specbook export --formats md      # markdown only</code></pre>
                 <li><code>找不到 .specbook 目錄</code> / <code>.specbook not found</code>: you are not at the project root, or <code>init</code> has not been run yet.</li>
                 <li><code>Cannot find module 'specbook'</code>: the dev dependency is not installed; rerun <code>pnpm install</code>.</li>
             </ul>
-            <p><code>specbook gaps</code> can still report unfinished chapters (for example, all-placeholder user stories) even after <code>validate</code> passes. Gaps do not block <code>build</code>, but they leave the client-facing export incomplete:</p>
-<pre><code>npx specbook gaps</code></pre>
+            <p><code>specbook enhance</code> can still report unfinished chapters (for example, all-placeholder user stories) even after <code>validate</code> passes. Pending items do not block <code>build</code>, but they leave the client-facing export incomplete:</p>
+<pre><code>npx specbook enhance</code></pre>
             <p>Before re-scaffolding, commit anything important. <code>init --force</code> overwrites existing files in <code>.specbook/content/</code> with no undo:</p>
 <pre><code>git status            # confirm no uncommitted changes
 npx specbook init --force</code></pre>
@@ -211,11 +212,11 @@ npx specbook init --force</code></pre>
             <p>Any AI agent can read and write these files without extra parsing. Recommended loop:</p>
             <ol>
                 <li><code>npx specbook validate</code> — confirm the current schemas pass</li>
-                <li><code>npx specbook gaps --json</code> — get a structured list of gaps</li>
+                <li><code>npx specbook enhance --json</code> — get a structured list of pending items (each carries a <code>prompt</code> for the agent to execute)</li>
                 <li>Edit the relevant file under <code>.specbook/content/</code></li>
                 <li><code>npx specbook validate</code> — confirm the edit still validates</li>
             </ol>
-            <p>Pass <code>--json</code> to <code>gaps</code> for machine-readable output that an agent can parse directly.</p>
+            <p>Pass <code>--json</code> to <code>enhance</code> for machine-readable output that an agent can parse directly.</p>
             <p><strong>For Claude Code users</strong>: SpecBook ships a Claude Code skill inside the npm package at <code>node_modules/specbook/skill/specbook</code>. Copy it into <code>~/.claude/skills/specbook/</code>:</p>
 <pre><code>mkdir -p ~/.claude/skills
 cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook</code></pre>

@@ -125,10 +125,11 @@ pnpm --version   # 任何近期版本皆可</code></pre>
             <p>兩個只讀命令幫你在不變更狀態的前提下盤點現況。</p>
             <p><code>specbook validate</code> 對 <code>.specbook/content/</code> 跑 zod schema 驗證。成功時印 <code>All content valid.</code> 並 exit 0；失敗時逐行印錯誤並 exit 1，適合直接接到 CI：</p>
 <pre><code>npx specbook validate</code></pre>
-            <p><code>specbook gaps</code> 偵測 placeholder、殘留模板、缺值欄位等需要補完的章節。預設輸出人類可讀清單，加 <code>--json</code> 給 LLM / 自動化流程使用：</p>
-<pre><code>npx specbook gaps
-npx specbook gaps --json</code></pre>
-            <p><code>gaps</code> 永遠 exit 0（缺口屬資訊性，不算錯誤）；若 <code>.specbook</code> 目錄不存在則 exit 2。配合 <code>validate</code> 一起用：先 <code>validate</code> 守 schema、再 <code>gaps</code> 找下一個該補的章節。</p>
+            <p><code>specbook enhance</code> 偵測殘留 placeholder、缺值欄位等需要補完的項目。預設輸出人類可讀清單，加 <code>--json</code> 給 LLM / 自動化流程使用：</p>
+<pre><code>npx specbook enhance
+npx specbook enhance --json</code></pre>
+            <p><code>enhance</code> 永遠 exit 0（待補事項屬資訊性，不算錯誤）；若 <code>.specbook</code> 目錄不存在則 exit 2。JSON 模式每筆 item 含 <code>prompt</code> 欄位，是給 AI 直接執行的英文指示。</p>
+            <blockquote><p><code>specbook gaps</code> 仍可用但已 deprecated；新專案請改用 <code>specbook enhance</code>。</p></blockquote>
         </section>
 
         <!-- doc-key: writes-mutations -->
@@ -191,8 +192,8 @@ npx specbook export --formats md      # 只輸出 markdown</code></pre>
                 <li><code>找不到 .specbook 目錄</code>：你不在專案根目錄，或還沒跑過 <code>init</code>。</li>
                 <li><code>Cannot find module 'specbook'</code>：dev dependency 沒裝好；重跑 <code>pnpm install</code>。</li>
             </ul>
-            <p><code>specbook gaps</code> 在 schema 通過後仍可能回報尚未填寫的章節（例如 user-stories 全是 placeholder）。它不會擋 build，但有缺口時客戶交付不夠完整：</p>
-<pre><code>npx specbook gaps</code></pre>
+            <p><code>specbook enhance</code> 在 schema 通過後仍可能回報尚未填寫的章節（例如 user-stories 全是 placeholder）。它不會擋 build，但有缺口時客戶交付不夠完整：</p>
+<pre><code>npx specbook enhance</code></pre>
             <p>需要重新 scaffold 時務必先確認重要內容已 commit。<code>init --force</code> 會直接覆寫既有 <code>.specbook/content/</code> 檔案，無 undo：</p>
 <pre><code>git status            # 確認沒有未提交的內容
 npx specbook init --force</code></pre>
@@ -211,11 +212,11 @@ npx specbook init --force</code></pre>
             <p>任何 AI agent 都能讀寫這些檔案，不需要額外 parser。建議工作流：</p>
             <ol>
                 <li><code>npx specbook validate</code> — 確認當前 schema 通過</li>
-                <li><code>npx specbook gaps --json</code> — 取得結構化的缺口清單</li>
+                <li><code>npx specbook enhance --json</code> — 取得結構化的待補項清單（每筆含 <code>prompt</code> 指示）</li>
                 <li>對 <code>.specbook/content/&lt;file&gt;</code> 寫入修改</li>
                 <li><code>npx specbook validate</code> — 確認改完仍合 schema</li>
             </ol>
-            <p>加 <code>--json</code> 讓 gaps 輸出 JSON，方便 agent parse。</p>
+            <p>加 <code>--json</code> 讓 enhance 輸出 JSON，方便 agent parse。</p>
             <p><strong>Claude Code 使用者</strong>：SpecBook 在 npm package 內附一個 Claude Code Skill (<code>node_modules/specbook/skill/specbook</code>)。複製到 <code>~/.claude/skills/specbook/</code> 後即可使用：</p>
 <pre><code>mkdir -p ~/.claude/skills
 cp -R node_modules/specbook/skill/specbook ~/.claude/skills/specbook</code></pre>
