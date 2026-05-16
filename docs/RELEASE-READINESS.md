@@ -60,8 +60,8 @@ pnpm pack:check
 ```text
 pnpm lint: passed
 pnpm build: passed
-Test Files  52 passed (52)
-Tests       199 passed (199)
+Test Files  57 passed (57)
+Tests       219 passed (219)
 pnpm docs:check: passed
 pnpm test:packaging: passed
 pnpm pack:check: passed
