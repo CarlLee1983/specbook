@@ -31,9 +31,12 @@ deprecation 警告；skill / doctor / README / user docs 全部統一指向 `enh
 
 ## 2. `gaps` CLI deprecation warning
 
-**機制**：在 `runGapsCli()` 進入點把警告字串拼到 `output.stderr`（不是
+**機制**：在 `runGapsCli()` 進入點把警告字串**前綴到** `output.stderr`（不是
 `console.error`），維持「pure function 回 `{exitCode, stdout, stderr}`」的
 契約。stdout、JSON 結構、exit code **完全不變**。
+
+當 stderr 還有其它訊息（如 `找不到 .specbook 目錄`），deprecation 訊息排第一
+行、用 `\n` 分隔；clean root 時 stderr 只有 deprecation 一行。
 
 **文案**：
 
