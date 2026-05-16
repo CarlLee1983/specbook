@@ -108,12 +108,14 @@ your-project/
 | 指令 | 用途 |
 |---|---|
 | `npx specbook init` | scaffold `.specbook/`（冪等；`--force` 覆寫；`--only=overview,...` 限制範圍） |
-| `npx specbook gaps` | 偵測 placeholder / 殘留模板（`--json` 給 skill 用） |
+| `npx specbook enhance` | 偵測殘留 placeholder 與未完成欄位（`--json` 給 skill 用） |
 | `npx specbook doctor` | 聚合健康檢查：environment / schemas / gaps / optional deps / docs.user（`--json` 機讀；`--verbose` 顯示通過項） |
 | `npx specbook validate` | 驗證內容符合 schema |
 | `npx specbook dev` | 本機 dev server（HMR） |
 | `npx specbook build` | 產 `.specbook/dist`（`--base /repo/` 用於 GitHub Pages 子路徑） |
 | `npx specbook export` | 輸出客戶交付用系統規格書（Markdown / HTML） |
+
+> `specbook gaps` 仍可用但已 deprecated；輸出與 `enhance --json` 經過 `placeholder.*` section-level 過濾後一致。phase 3 將整支移除。
 
 ## 客製化
 
@@ -155,7 +157,7 @@ npx specbook export --root .specbook --out .specbook/dist/client-spec --formats 
 目前專案以 Vitest 驗證核心路徑：
 
 - schema 驗證：config / overview / tech-stack / architecture / user-stories / roadmap
-- CLI 行為：`init` / `validate` / `gaps` / `dev` / `build` / `export`
+- CLI 行為：`init` / `validate` / `enhance` / `dev` / `build` / `export`
 - SSG 與元件：章節渲染、響應式樣式、Mermaid render、scrollspy
 - npm package smoke test：`npm pack` 後安裝到乾淨 app，驗證 installed CLI 可執行 `validate` / `build` / `export`
 - scaffold-generated config smoke test：installed CLI 產生的 `.specbook/specbook.config.ts` 可正常 `import { defineConfig } from 'specbook'`

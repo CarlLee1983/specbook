@@ -11,7 +11,7 @@ SpecBook 已形成可發布的 CLI 工具閉環：
 3. `specbook dev`：啟動本機 Vite preview / HMR。
 4. `specbook build`：輸出可部署的 `.specbook/dist/index.html` 與 assets。
 5. `specbook export`：輸出客戶交付用 `system-spec.md` 與 `system-spec.html`。
-6. `specbook gaps`：偵測初始化模板或 placeholder 是否仍殘留。
+6. `specbook enhance`：偵測殘留 placeholder 與未完成欄位（取代舊的 `specbook gaps`，後者進入 deprecation）。
 7. `specbook doctor`：聚合 environment / `.specbook` / schemas / gaps / optional deps / docs.user 檢查，輸出統一報告，支援 `--json` 與 `--verbose`。
 
 ## Package config loading
