@@ -45,6 +45,8 @@
   "scripts": {
     "dev": "vite --config vite.config.ts examples/taskflow",
     "build": "tsc -p tsconfig.json && node scripts/copy-build-assets.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "pnpm typecheck",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:packaging": "pnpm build && vitest run tests/packaging/package-smoke.test.ts",

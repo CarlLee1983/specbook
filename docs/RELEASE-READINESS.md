@@ -46,15 +46,24 @@ import { defineConfig } from 'specbook'
 標準驗證指令：
 
 ```bash
+pnpm lint
 pnpm build
 pnpm test
+pnpm docs:check
+pnpm test:packaging
+pnpm pack:check
 ```
 
-最近一次驗證結果：
+最近一次驗證結果（2026-05-16）：
 
 ```text
+pnpm lint: passed
+pnpm build: passed
 Test Files  52 passed (52)
 Tests       199 passed (199)
+pnpm docs:check: passed
+pnpm test:packaging: passed
+pnpm pack:check: passed
 ```
 
 ## UI / PaperTech 狀態
@@ -90,4 +99,3 @@ HTML export 會依 `theme.locale` 輸出 `<html lang="...">`，例如：
 - v1 目前不開放自訂元件或主題 eject，保持固定 PaperTech 骨架。
 - export HTML 是正式文件版式，不等同互動式網站版。
 - 測試驗證的是目前 CLI 與 fixture 覆蓋路徑；真實大型專案的內容品質仍取決於使用者填寫的 spec 完整度。
-

@@ -51,6 +51,25 @@ npx specbook docs dev
 npx specbook docs build
 ```
 
+`docs validate` / `docs build` 會讀取專案根目錄的 `.specbook/specbook.config.ts`。
+若你是第一次啟用 user docs，請在 config 內加入：
+
+```ts
+import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: { name: 'Your Project' },
+  docs: {
+    user: {
+      enabled: true,
+      locales: ['zh-TW', 'en'],
+      theme: 'anthropic-warm',
+      coverage: 'all',
+    },
+  },
+})
+```
+
 詳見 `docs/superpowers/specs/2026-05-15-user-docs-integration-design.md`。
 
 ## Claude Code Skill（建議搭配）
@@ -139,6 +158,17 @@ npx specbook export --root .specbook --out .specbook/dist/client-spec --formats 
 - SSG 與元件：章節渲染、響應式樣式、Mermaid render、scrollspy
 - npm package smoke test：`npm pack` 後安裝到乾淨 app，驗證 installed CLI 可執行 `validate` / `build` / `export`
 - scaffold-generated config smoke test：installed CLI 產生的 `.specbook/specbook.config.ts` 可正常 `import { defineConfig } from 'specbook'`
+
+建議發佈前執行：
+
+```bash
+pnpm lint
+pnpm build
+pnpm test
+pnpm docs:check
+pnpm test:packaging
+pnpm pack:check
+```
 
 更多發佈狀態與已知邊界見 [`docs/RELEASE-READINESS.md`](./docs/RELEASE-READINESS.md)。
 
