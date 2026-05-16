@@ -4,7 +4,7 @@ import { checkNodeVersion } from './checks/node-version.js'
 import { checkSpecbookRoot } from './checks/specbook-root.js'
 import { checkConfigLoadable } from './checks/config-loadable.js'
 import { checkValidate } from './checks/validate.js'
-import { checkGaps } from './checks/gaps.js'
+import { checkEnhance } from './checks/enhance.js'
 import {
   checkMermaidPlaywright,
   type MermaidDeps,
@@ -57,7 +57,7 @@ export async function runDoctor(
       skipped('specbook-root', 'Node version too old', 'project'),
       skipped('config', 'Node version too old', 'project'),
       skipped('validate', 'Node version too old', 'content'),
-      skipped('gaps', 'Node version too old', 'content'),
+      skipped('enhance', 'Node version too old', 'content'),
       skipped('mermaid-playwright', 'Node version too old', 'optional-deps'),
       skipped('docs-user', 'Node version too old', 'docs-user'),
     )
@@ -70,7 +70,7 @@ export async function runDoctor(
     findings.push(
       skipped('config', '.specbook/ missing', 'project'),
       skipped('validate', '.specbook/ missing', 'content'),
-      skipped('gaps', '.specbook/ missing', 'content'),
+      skipped('enhance', '.specbook/ missing', 'content'),
       skipped('mermaid-playwright', '.specbook/ missing', 'optional-deps'),
       skipped('docs-user', '.specbook/ missing', 'docs-user'),
     )
@@ -82,7 +82,7 @@ export async function runDoctor(
   if (configFindings.some((f) => f.severity === 'error')) {
     findings.push(
       skipped('validate', 'config could not be loaded', 'content'),
-      skipped('gaps', 'config could not be loaded', 'content'),
+      skipped('enhance', 'config could not be loaded', 'content'),
       skipped(
         'mermaid-playwright',
         'config could not be loaded',
@@ -94,7 +94,7 @@ export async function runDoctor(
   }
 
   findings.push(...(await checkValidate(ctx)))
-  findings.push(...(await checkGaps(ctx)))
+  findings.push(...(await checkEnhance(ctx)))
   findings.push(
     ...(await checkMermaidPlaywright(
       ctx,

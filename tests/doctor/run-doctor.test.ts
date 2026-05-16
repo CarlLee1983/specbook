@@ -22,7 +22,7 @@ describe('runDoctor', () => {
     expect(ids).toContain('specbook-missing')
     expect(ids).toContain('skipped.config')
     expect(ids).toContain('skipped.validate')
-    expect(ids).toContain('skipped.gaps')
+    expect(ids).toContain('skipped.enhance')
   })
 
   it('bad-config: config-loadable error + skipped infos', async () => {
@@ -48,7 +48,7 @@ describe('runDoctor', () => {
     const warnIds = report.findings
       .filter((f) => f.severity === 'warn')
       .map((f) => f.id)
-    expect(warnIds.some((id) => id.startsWith('gaps.'))).toBe(true)
+    expect(warnIds.some((id) => id.startsWith('enhance.'))).toBe(true)
   })
 
   it('mermaid-without-playwright: warn but ok=true', async () => {
