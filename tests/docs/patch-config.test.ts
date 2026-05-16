@@ -18,6 +18,27 @@ describe('patchConfig', () => {
       expect(r.reason).toContain('defineConfig')
     }
   })
+
+  it('returns skipped when docs.user already exists', () => {
+    const src = `import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: {
+    name: 'X',
+  },
+  docs: {
+    user: {
+      enabled: true,
+      locales: ['en'],
+      theme: 'anthropic-warm',
+      coverage: 'all',
+    },
+  },
+})
+`
+    const r = patchConfig(src, DEFAULT_DOCS_USER)
+    expect(r.kind).toBe('skipped')
+  })
 })
 
 describe('renderDocsUserSnippet', () => {
