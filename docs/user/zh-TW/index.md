@@ -137,7 +137,15 @@ npx specbook export --formats md      # 只輸出 markdown
 <!-- doc-key: diagnostics-recovery -->
 ## 診斷與修復
 
-當 `dev` 或 `build` 印錯誤、或站台看起來怪怪的，先跑 `validate` 找 schema 問題：
+當 `dev` 或 `build` 印出錯誤，或網站長相不對時，先跑 `doctor` 看聚合報告：
+
+```bash
+npx specbook doctor
+```
+
+`doctor` 會一次跑完環境檢查（Node 版本、`.specbook/` 是否存在、config 能否載入）、schema 驗證、缺口偵測與可選依賴檢查。AI agent 可用 `--json` 取得結構化輸出；`--verbose` 會額外顯示通過的檢查。
+
+若需要直接看 schema 細節：
 
 ```bash
 npx specbook validate

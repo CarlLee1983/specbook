@@ -137,7 +137,15 @@ The built-in i18n strings live in `i18n/{zh-TW,en}.ts` inside the npm package. v
 <!-- doc-key: diagnostics-recovery -->
 ## Diagnostics / recovery
 
-When `dev` or `build` prints errors, or the rendered site looks off, start with `validate` to find schema issues:
+When `dev` or `build` prints errors, or the rendered site looks off, start with `doctor` for an aggregated report:
+
+```bash
+npx specbook doctor
+```
+
+`doctor` runs environment checks (Node version, `.specbook/` presence, config loadability), schema validation, gap detection, and optional-dependency checks in one pass. Use `--json` for machine-readable output that AI agents can consume; use `--verbose` to also show passing checks.
+
+If you need to drill into schemas directly:
 
 ```bash
 npx specbook validate

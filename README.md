@@ -109,6 +109,7 @@ your-project/
 |---|---|
 | `npx specbook init` | scaffold `.specbook/`（冪等；`--force` 覆寫；`--only=overview,...` 限制範圍） |
 | `npx specbook gaps` | 偵測 placeholder / 殘留模板（`--json` 給 skill 用） |
+| `npx specbook doctor` | 聚合健康檢查：environment / schemas / gaps / optional deps / docs.user（`--json` 機讀；`--verbose` 顯示通過項） |
 | `npx specbook validate` | 驗證內容符合 schema |
 | `npx specbook dev` | 本機 dev server（HMR） |
 | `npx specbook build` | 產 `.specbook/dist`（`--base /repo/` 用於 GitHub Pages 子路徑） |
