@@ -1,0 +1,5 @@
+- title: Initial release
+  quarter: 2026 Q2
+  status: active
+  items:
+    - Ship doctor subcommand

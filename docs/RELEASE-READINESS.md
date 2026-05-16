@@ -12,6 +12,7 @@ SpecBook 已形成可發布的 CLI 工具閉環：
 4. `specbook build`：輸出可部署的 `.specbook/dist/index.html` 與 assets。
 5. `specbook export`：輸出客戶交付用 `system-spec.md` 與 `system-spec.html`。
 6. `specbook gaps`：偵測初始化模板或 placeholder 是否仍殘留。
+7. `specbook doctor`：聚合 environment / `.specbook` / schemas / gaps / optional deps / docs.user 檢查，輸出統一報告，支援 `--json` 與 `--verbose`。
 
 ## Package config loading
 
@@ -59,8 +60,8 @@ pnpm pack:check
 ```text
 pnpm lint: passed
 pnpm build: passed
-Test Files  52 passed (52)
-Tests       199 passed (199)
+Test Files  57 passed (57)
+Tests       219 passed (219)
 pnpm docs:check: passed
 pnpm test:packaging: passed
 pnpm pack:check: passed

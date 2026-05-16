@@ -180,7 +180,10 @@ npx specbook export --formats md      # markdown only</code></pre>
         <!-- doc-key: diagnostics-recovery -->
         <section id="diagnostics-recovery">
             <h2>Diagnostics / recovery</h2>
-            <p>When <code>dev</code> or <code>build</code> prints errors, or the rendered site looks off, start with <code>validate</code> to find schema issues:</p>
+            <p>When <code>dev</code> or <code>build</code> prints errors, or the rendered site looks off, start with <code>doctor</code> for an aggregated report:</p>
+<pre><code>npx specbook doctor</code></pre>
+            <p><code>doctor</code> runs environment checks (Node version, <code>.specbook/</code> presence, config loadability), schema validation, gap detection, and optional-dependency checks in one pass. Use <code>--json</code> for machine-readable output that AI agents can consume; use <code>--verbose</code> to also show passing checks.</p>
+            <p>If you need to drill into schemas directly:</p>
 <pre><code>npx specbook validate</code></pre>
             <p>Common errors:</p>
             <ul>

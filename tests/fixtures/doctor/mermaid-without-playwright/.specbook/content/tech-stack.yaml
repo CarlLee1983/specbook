@@ -1,0 +1,5 @@
+- layer: Frontend
+  items:
+    - name: react
+      version: ^19.0.0
+      role: UI 元件框架

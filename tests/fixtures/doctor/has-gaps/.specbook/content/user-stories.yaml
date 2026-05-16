@@ -1,0 +1,4 @@
+- as: 主要使用者角色
+  want: run doctor and get a clear health report
+  soThat: I can fix the project quickly
+  priority: p0

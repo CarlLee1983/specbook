@@ -180,7 +180,10 @@ npx specbook export --formats md      # 只輸出 markdown</code></pre>
         <!-- doc-key: diagnostics-recovery -->
         <section id="diagnostics-recovery">
             <h2>診斷與修復</h2>
-            <p>當 <code>dev</code> 或 <code>build</code> 印錯誤、或站台看起來怪怪的，先跑 <code>validate</code> 找 schema 問題：</p>
+            <p>當 <code>dev</code> 或 <code>build</code> 印出錯誤，或網站長相不對時，先跑 <code>doctor</code> 看聚合報告：</p>
+<pre><code>npx specbook doctor</code></pre>
+            <p><code>doctor</code> 會一次跑完環境檢查（Node 版本、<code>.specbook/</code> 是否存在、config 能否載入）、schema 驗證、缺口偵測與可選依賴檢查。AI agent 可用 <code>--json</code> 取得結構化輸出；<code>--verbose</code> 會額外顯示通過的檢查。</p>
+            <p>若需要直接看 schema 細節：</p>
 <pre><code>npx specbook validate</code></pre>
             <p>常見錯誤類型：</p>
             <ul>
