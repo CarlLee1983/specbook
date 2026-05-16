@@ -56,14 +56,16 @@ Two read-only commands let you inspect state without changing anything.
 npx specbook validate
 ```
 
-`specbook gaps` detects placeholders, leftover templates, and missing fields you still need to fill in. It prints a human-readable list by default; pass `--json` for LLM or automation consumers:
+`specbook enhance` detects leftover placeholders and missing fields you still need to fill in. It prints a human-readable list by default; pass `--json` for LLM or automation consumers:
 
 ```bash
-npx specbook gaps
-npx specbook gaps --json
+npx specbook enhance
+npx specbook enhance --json
 ```
 
-`gaps` always exits 0 (gaps are informational, not errors); it exits 2 only if `.specbook` is missing. Pair the two: `validate` enforces the schema, `gaps` tells you which chapter to write next.
+`enhance` always exits 0 (pending items are informational, not errors); it exits 2 only if `.specbook` is missing. Each JSON item carries a `prompt` field — an English instruction that an AI agent can execute directly.
+
+> `specbook gaps` is still available but deprecated; new projects should use `specbook enhance`.
 
 <!-- doc-key: writes-mutations -->
 ## Writes / mutations
@@ -157,10 +159,10 @@ Common errors:
 - `找不到 .specbook 目錄` / `.specbook not found`: you are not at the project root, or `init` has not been run yet.
 - `Cannot find module 'specbook'`: the dev dependency is not installed; rerun `pnpm install`.
 
-`specbook gaps` can still report unfinished chapters (for example, all-placeholder user stories) even after `validate` passes. Gaps do not block `build`, but they leave the client-facing export incomplete:
+`specbook enhance` can still report unfinished chapters (for example, all-placeholder user stories) even after `validate` passes. Pending items do not block `build`, but they leave the client-facing export incomplete:
 
 ```bash
-npx specbook gaps
+npx specbook enhance
 ```
 
 Before re-scaffolding, commit anything important. `init --force` overwrites existing files in `.specbook/content/` with no undo:
@@ -184,11 +186,11 @@ SpecBook's content format is LLM-friendly by design:
 Any AI agent can read and write these files without extra parsing. Recommended loop:
 
 1. `npx specbook validate` — confirm the current schemas pass
-2. `npx specbook gaps --json` — get a structured list of gaps
+2. `npx specbook enhance --json` — get a structured list of pending items (each carries a `prompt` for the agent to execute)
 3. Edit the relevant file under `.specbook/content/`
 4. `npx specbook validate` — confirm the edit still validates
 
-Pass `--json` to `gaps` for machine-readable output that an agent can parse directly.
+Pass `--json` to `enhance` for machine-readable output that an agent can parse directly.
 
 **For Claude Code users**: SpecBook ships a Claude Code skill inside the npm package at `node_modules/specbook/skill/specbook`. Copy it into `~/.claude/skills/specbook/`:
 

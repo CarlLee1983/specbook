@@ -56,14 +56,16 @@ npx specbook dev
 npx specbook validate
 ```
 
-`specbook gaps` 偵測 placeholder、殘留模板、缺值欄位等需要補完的章節。預設輸出人類可讀清單，加 `--json` 給 LLM / 自動化流程使用：
+`specbook enhance` 偵測殘留 placeholder、缺值欄位等需要補完的項目。預設輸出人類可讀清單，加 `--json` 給 LLM / 自動化流程使用：
 
 ```bash
-npx specbook gaps
-npx specbook gaps --json
+npx specbook enhance
+npx specbook enhance --json
 ```
 
-`gaps` 永遠 exit 0（缺口屬資訊性，不算錯誤）；若 `.specbook` 目錄不存在則 exit 2。配合 `validate` 一起用：先 `validate` 守 schema、再 `gaps` 找下一個該補的章節。
+`enhance` 永遠 exit 0（待補事項屬資訊性，不算錯誤）；若 `.specbook` 目錄不存在則 exit 2。JSON 模式每筆 item 含 `prompt` 欄位，是給 AI 直接執行的英文指示。
+
+> `specbook gaps` 仍可用但已 deprecated；新專案請改用 `specbook enhance`。
 
 <!-- doc-key: writes-mutations -->
 ## 寫入與產出
@@ -157,10 +159,10 @@ npx specbook validate
 - `找不到 .specbook 目錄`：你不在專案根目錄，或還沒跑過 `init`。
 - `Cannot find module 'specbook'`：dev dependency 沒裝好；重跑 `pnpm install`。
 
-`specbook gaps` 在 schema 通過後仍可能回報尚未填寫的章節（例如 user-stories 全是 placeholder）。它不會擋 build，但有缺口時客戶交付不夠完整：
+`specbook enhance` 在 schema 通過後仍可能回報尚未填寫的章節（例如 user-stories 全是 placeholder）。它不會擋 build，但有缺口時客戶交付不夠完整：
 
 ```bash
-npx specbook gaps
+npx specbook enhance
 ```
 
 需要重新 scaffold 時務必先確認重要內容已 commit。`init --force` 會直接覆寫既有 `.specbook/content/` 檔案，無 undo：
@@ -184,11 +186,11 @@ SpecBook 的內容格式對 LLM 非常友善：
 任何 AI agent 都能讀寫這些檔案，不需要額外 parser。建議工作流：
 
 1. `npx specbook validate` — 確認當前 schema 通過
-2. `npx specbook gaps --json` — 取得結構化的缺口清單
+2. `npx specbook enhance --json` — 取得結構化的待補項清單（每筆含 `prompt` 指示）
 3. 對 `.specbook/content/<file>` 寫入修改
 4. `npx specbook validate` — 確認改完仍合 schema
 
-加 `--json` 讓 gaps 輸出 JSON，方便 agent parse。
+加 `--json` 讓 enhance 輸出 JSON，方便 agent parse。
 
 **Claude Code 使用者**：SpecBook 在 npm package 內附一個 Claude Code Skill (`node_modules/specbook/skill/specbook`)。複製到 `~/.claude/skills/specbook/` 後即可使用：
 
