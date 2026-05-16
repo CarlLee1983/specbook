@@ -3,6 +3,7 @@ import { Command } from 'commander'
 import { resolve } from 'node:path'
 import { runValidate } from './validate.js'
 import { createDocsCommand } from './docs.js'
+import { createDoctorCommand } from './doctor.js'
 
 const program = new Command()
 
@@ -92,6 +93,7 @@ program
   })
 
 program.addCommand(createDocsCommand())
+program.addCommand(createDoctorCommand())
 
 program.parseAsync(process.argv).catch((e) => {
   console.error(e)
