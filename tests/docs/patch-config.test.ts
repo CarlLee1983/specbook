@@ -39,6 +39,25 @@ export default defineConfig({
     const r = patchConfig(src, DEFAULT_DOCS_USER)
     expect(r.kind).toBe('skipped')
   })
+
+  it('returns unparseable when docs exists without user (conservative)', () => {
+    const src = `import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: {
+    name: 'X',
+  },
+  docs: {
+    somethingElse: true,
+  },
+})
+`
+    const r = patchConfig(src, DEFAULT_DOCS_USER)
+    expect(r.kind).toBe('unparseable')
+    if (r.kind === 'unparseable') {
+      expect(r.reason).toContain('without user')
+    }
+  })
 })
 
 describe('renderDocsUserSnippet', () => {
