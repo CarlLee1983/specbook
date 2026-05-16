@@ -18,6 +18,7 @@ export function checkSchemaUserStories(stories: UserStories): EnhanceItem[] {
   const items: EnhanceItem[] = []
   for (let i = 0; i < stories.length; i++) {
     const story = stories[i]
+    if (!story) continue
     for (const field of FIELDS) {
       const value = story[field]
       if (typeof value !== 'string') continue

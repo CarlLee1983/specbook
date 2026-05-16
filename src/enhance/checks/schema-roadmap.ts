@@ -7,6 +7,7 @@ export function checkSchemaRoadmap(roadmap: Roadmap): EnhanceItem[] {
   const items: EnhanceItem[] = []
   for (let i = 0; i < roadmap.length; i++) {
     const m = roadmap[i]
+    if (!m) continue
     if (TITLE_PLACEHOLDER.test(m.title)) {
       const path = `milestones[${i}].title`
       items.push({

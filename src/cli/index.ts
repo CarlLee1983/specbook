@@ -92,6 +92,19 @@ program
     process.exit(r.exitCode)
   })
 
+program
+  .command('enhance')
+  .description('List remaining placeholders and schema gaps with AI-actionable prompts')
+  .option('-r, --root <dir>', 'Path to .specbook directory', '.specbook')
+  .option('--json', 'Emit JSON to stdout', false)
+  .action(async (opts: { root: string; json: boolean }) => {
+    const { runEnhanceCli } = await import('./enhance.js')
+    const r = await runEnhanceCli({ root: opts.root, json: opts.json })
+    if (r.stdout) process.stdout.write(r.stdout + '\n')
+    if (r.stderr) process.stderr.write(r.stderr + '\n')
+    process.exit(r.exitCode)
+  })
+
 program.addCommand(createDocsCommand())
 program.addCommand(createDoctorCommand())
 
