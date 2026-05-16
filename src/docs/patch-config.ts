@@ -7,7 +7,7 @@ export type PatchConfigResult =
 
 export function patchConfig(
   source: string,
-  _docsUser: DocsUserConfig,
+  docsUser: DocsUserConfig,
 ): PatchConfigResult {
   const define = findDefineConfigBody(source)
   if (!define) {
@@ -24,7 +24,30 @@ export function patchConfig(
       reason: 'existing docs block without user; will not edit nested object',
     }
   }
-  return { kind: 'unparseable', reason: 'not implemented yet' }
+
+  // No docs block: ensure trailing comma on the last top-level key, then insert
+  // the docs block just before `})`.
+  const before = source.slice(0, define.closeStart)
+  const after = source.slice(define.closeStart) // starts at `})`
+  const beforeWithComma = ensureTrailingComma(before)
+  const snippet = renderDocsUserSnippet(
+    docsUser.locales,
+    docsUser.theme,
+    docsUser.coverage,
+  )
+  const patched = `${beforeWithComma}${snippet}\n${after}`
+  return { kind: 'patched', text: patched }
+}
+
+function ensureTrailingComma(before: string): string {
+  // `before` ends just before `})`. Walk back over whitespace; if the last
+  // non-whitespace char isn't a comma, append one (with a newline + 2-space
+  // indent so the inserted block starts on its own line).
+  const trimmed = before.replace(/\s+$/, '')
+  if (trimmed.endsWith(',')) {
+    return trimmed + '\n'
+  }
+  return trimmed + ',\n'
 }
 
 interface DefineConfigBody {

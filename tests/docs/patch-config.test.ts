@@ -58,6 +58,67 @@ export default defineConfig({
       expect(r.reason).toContain('without user')
     }
   })
+
+  it('patches a template config (no trailing comma on last key)', () => {
+    const src = `import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: {
+    name: 'X'
+  }
+})
+`
+    const r = patchConfig(src, DEFAULT_DOCS_USER)
+    expect(r.kind).toBe('patched')
+    if (r.kind === 'patched') {
+      expect(r.text).toContain("docs: {")
+      expect(r.text).toContain("user: {")
+      expect(r.text).toContain("enabled: true,")
+      expect(r.text).toContain("locales: ['zh-TW', 'en'],")
+      // Last project key got a trailing comma added before insertion
+      expect(r.text).toMatch(/name: 'X',?\n\s*\},/)
+    }
+  })
+
+  it('patches a config with trailing comma on last key', () => {
+    const src = `import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: {
+    name: 'X',
+  },
+})
+`
+    const r = patchConfig(src, DEFAULT_DOCS_USER)
+    expect(r.kind).toBe('patched')
+    if (r.kind === 'patched') {
+      expect(r.text).toContain("docs: {")
+      // Output ends cleanly with single })
+      expect(r.text.trimEnd().endsWith('})')).toBe(true)
+    }
+  })
+
+  it('honours custom locales / theme / coverage in patched output', () => {
+    const src = `import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: {
+    name: 'X',
+  },
+})
+`
+    const r = patchConfig(src, {
+      enabled: true,
+      locales: ['en'],
+      theme: 'anthropic-warm',
+      coverage: ['install-setup'],
+    })
+    expect(r.kind).toBe('patched')
+    if (r.kind === 'patched') {
+      expect(r.text).toContain("locales: ['en'],")
+      expect(r.text).toContain("coverage: ['install-setup'],")
+    }
+  })
 })
 
 describe('renderDocsUserSnippet', () => {
