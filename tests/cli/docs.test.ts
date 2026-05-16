@@ -123,4 +123,92 @@ describe('specbook docs CLI', () => {
     await access(join(tmp, 'dist/user/zh-TW/index.html'))
     await access(join(tmp, 'dist/user/en/index.html'))
   })
+
+  it('docs init --write-config patches a freshly-initialised config', async () => {
+    // Use `specbook init` first to produce a real template config
+    const init = spawnSync('node', [CLI, 'init'], {
+      cwd: tmp,
+      encoding: 'utf8',
+    })
+    expect(init.status).toBe(0)
+
+    const r = runCli(
+      ['docs', 'init', '--locales', 'en', '--project', 'X', '--write-config'],
+      tmp,
+    )
+    expect(r.status).toBe(0)
+    expect(r.stdout).toContain('patched')
+    expect(r.stdout).toContain('added docs.user')
+
+    const cfgText = await readFile(
+      join(tmp, '.specbook/specbook.config.ts'),
+      'utf8',
+    )
+    expect(cfgText).toContain("docs: {")
+    expect(cfgText).toContain("user: {")
+    expect(cfgText).toContain("enabled: true")
+    expect(cfgText).toContain("locales: ['en']")
+  })
+
+  it('docs init --write-config is idempotent when docs.user already present', async () => {
+    await mkdir(join(tmp, '.specbook'), { recursive: true })
+    const cfg = `import { defineConfig } from 'specbook'
+
+export default defineConfig({
+  project: {
+    name: 'X',
+  },
+  docs: {
+    user: {
+      enabled: true,
+      locales: ['en'],
+      theme: 'anthropic-warm',
+      coverage: 'all',
+    },
+  },
+})
+`
+    await writeFile(join(tmp, '.specbook/specbook.config.ts'), cfg, 'utf8')
+
+    const r = runCli(
+      ['docs', 'init', '--locales', 'en', '--project', 'X', '--write-config'],
+      tmp,
+    )
+    expect(r.status).toBe(0)
+    expect(r.stdout).toContain('already has docs.user')
+
+    const after = await readFile(
+      join(tmp, '.specbook/specbook.config.ts'),
+      'utf8',
+    )
+    expect(after).toBe(cfg)
+  })
+
+  it('docs init --write-config exits 1 when config is missing', async () => {
+    // No .specbook/specbook.config.ts written
+    const r = runCli(
+      ['docs', 'init', '--locales', 'en', '--project', 'X', '--write-config'],
+      tmp,
+    )
+    expect(r.status).toBe(1)
+    expect(r.stderr).toContain('run `specbook init` first')
+  })
+
+  it('docs init --write-config exits 1 and prints snippet when config is unparseable', async () => {
+    await mkdir(join(tmp, '.specbook'), { recursive: true })
+    // No defineConfig call at all → unparseable
+    await writeFile(
+      join(tmp, '.specbook/specbook.config.ts'),
+      `export default { project: { name: 'X' } }\n`,
+      'utf8',
+    )
+    const r = runCli(
+      ['docs', 'init', '--locales', 'en', '--project', 'X', '--write-config'],
+      tmp,
+    )
+    expect(r.status).toBe(1)
+    expect(r.stderr).toContain('could not patch')
+    expect(r.stdout).toContain("docs: {")
+    expect(r.stdout).toContain("user: {")
+  })
 })
