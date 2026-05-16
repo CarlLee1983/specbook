@@ -1,11 +1,13 @@
 import { Command } from 'commander'
 import { createServer } from 'node:http'
-import { readFile } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
+import { readFile, writeFile } from 'node:fs/promises'
 import { resolve, join, extname } from 'node:path'
 import { scaffoldUserDocs } from '../docs/scaffold.js'
 import { buildUserDocs } from '../docs/build.js'
 import { validateUserDocs } from '../docs/validator.js'
 import { normalizeCoverageFlag } from '../docs/coverage.js'
+import { patchConfig, renderDocsUserSnippet } from '../docs/patch-config.js'
 import { loadConfig } from '../content/load-config.js'
 import type { DocsUserConfig } from '../schema/docs.js'
 
@@ -46,6 +48,11 @@ export function createDocsCommand(): Command {
     .option('--tagline <text>', 'One-line tagline', '')
     .option('--github <url>', 'GitHub URL', '')
     .option('--force', 'Overwrite existing files', false)
+    .option(
+      '--write-config',
+      'Patch .specbook/specbook.config.ts to enable docs.user',
+      false,
+    )
     .action(async (opts) => {
       const root = resolve(opts.root)
       const userCfg = await tryLoadDocsUserConfig(root)
@@ -81,6 +88,35 @@ export function createDocsCommand(): Command {
         process.exit(1)
       }
       for (const f of r.writtenFiles) console.log('wrote', f)
+
+      if (opts.writeConfig) {
+        const configPath = resolve(root, '.specbook/specbook.config.ts')
+        if (!existsSync(configPath)) {
+          console.error(
+            `expected ${configPath} (run \`specbook init\` first)`,
+          )
+          process.exit(1)
+        }
+        const original = await readFile(configPath, 'utf8')
+        const result = patchConfig(original, {
+          enabled: true,
+          locales,
+          theme: opts.theme,
+          coverage: cov,
+        })
+        if (result.kind === 'patched') {
+          await writeFile(configPath, result.text, 'utf8')
+          console.log(`patched ${configPath} (added docs.user)`)
+        } else if (result.kind === 'skipped') {
+          console.log(`${configPath} already has docs.user; left untouched`)
+        } else {
+          console.error(
+            `could not patch ${configPath}: ${result.reason}. paste this manually:`,
+          )
+          console.log(renderDocsUserSnippet(locales, opts.theme, cov))
+          process.exit(1)
+        }
+      }
     })
 
   cmd
